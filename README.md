@@ -6,12 +6,13 @@ Proyecto desarrollado para la asignatura **Desarrollo Orientado a Objetos II (PR
 
 El proyecto está basado en el caso de estudio **SpeedFast**, una empresa de reparto a domicilio que ofrece servicios de comida, encomiendas y compras express.
 
-<!-- Modificar Si proyecto continua en sigiente semana para mantener line del tiempo del proyecto  -_- -->
+<!-- Si el proyecto continúa en las siguientes semanas, modificar esta sección para mantener la línea de tiempo del proyecto. -->
 El objetivo de esta actividad es aplicar conceptos de **Programación Orientada a Objetos**, principalmente herencia, sobreescritura, sobrecarga y polimorfismo.
 
 ---
 
 ## 📁 Estructura del Proyecto
+
 ```text
 SpeedFast/
 ├── README.md
@@ -73,7 +74,9 @@ El proyecto implementa:
 ---
 
 ## ☕ Requisitos
-<!-- Tal vez deba bajar el jdk de 21 a 17 -->
+
+<!-- Verificar la versión de JDK utilizada en el proyecto antes de modificar este requisito. -->
+
 * Java JDK 21 o superior.
 * IntelliJ IDEA Community Edition.
 * Maven.
