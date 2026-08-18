@@ -18,26 +18,35 @@ public class Main {
     public static void main(String[] args) {
 
         Pedido[] pedidos = {
-                new PedidoComida("001", "Av. Las Condes 123"),
-                new PedidoEncomienda("002", "Av. Los Leones 046"),
-                new PedidoExpress("003", "Av. Santa Rosa 1623")
+                new PedidoComida("001", "Av. Las Condes 123", 10.2d),
+                new PedidoEncomienda("002", "Av. Los Leones 046", 5.6d),
+                new PedidoExpress("003", "Av. Santa Rosa 1623", 7.9d)
         };
 
         for (Pedido pedido : pedidos) {
-            pedido.asignarRepartidor();
+            //pedido.asignarRepartidor();
+            pedido.mostrarResumen();
             System.out.println();
         }
 
-        PedidoComida comida = (PedidoComida) pedidos[0];
-        PedidoEncomienda encomienda = (PedidoEncomienda) pedidos[1];
-        PedidoExpress express = (PedidoExpress) pedidos[2];
 
-        comida.asignarRepartidor("Juan Pérez");
-        System.out.println();
-
-        encomienda.asignarRepartidor("Camila Soto");
-        System.out.println();
-
-        express.asignarRepartidor("Luis Díaz");
+        //Semana 1
+//        PedidoComida comida = (PedidoComida) pedidos[0];
+//        PedidoEncomienda encomienda = (PedidoEncomienda) pedidos[1];
+//        PedidoExpress express = (PedidoExpress) pedidos[2];
+//
+//        comida.asignarRepartidor("Juan Pérez");
+//        System.out.println();
+//        comida.mostrarResumen();
+//        System.out.println();
+//
+//        encomienda.asignarRepartidor("Camila Soto");
+//        System.out.println();
+//        encomienda.mostrarResumen();
+//        System.out.println();
+//
+//        express.asignarRepartidor("Luis Díaz");
+//        System.out.println();
+//        express.mostrarResumen();
     }
 }

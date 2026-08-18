@@ -13,8 +13,21 @@ public class PedidoExpress extends Pedido {
      * @param idPedido identificador del pedido
      * @param direccionEntrega dirección donde se realizará la entrega
      */
-    public PedidoExpress(String idPedido, String direccionEntrega) {
-        super(idPedido, direccionEntrega, "Express");
+    public PedidoExpress(String idPedido, String direccionEntrega,  double distanciaKm) {
+        super(idPedido, direccionEntrega, distanciaKm, "Express");
+    }
+
+    /**
+     * Calcular el tiempo de entrega del pedido
+     * se calcula a partir de 15 min, más lo sumado de 2 min multiplicado por los Kilómetros
+     * @return devuelve el tiempo calculado del los kilómetros multiplicado por 2 min
+     */
+    @Override
+    public int calcularTiempoEntrega() {
+        if (getDistanciaKm() > 5) {
+            return 15;
+        }
+        return 10;
     }
 
     /**
@@ -40,4 +53,11 @@ public class PedidoExpress extends Pedido {
         System.out.println("→ Repartidor más cercano con disponibilidad inmediata encontrado.");
         System.out.println("→ Pedido asignado a " + repartidor);
     }
+
+    @Override
+    public void mostrarResumen() {
+        super.mostrarResumen();
+        System.out.println("Tiempo estimado de entrega: " + calcularTiempoEntrega() + " minutos");
+    }
+
 }

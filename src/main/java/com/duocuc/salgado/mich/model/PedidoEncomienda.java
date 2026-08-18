@@ -13,8 +13,18 @@ public class PedidoEncomienda extends Pedido {
      * @param idPedido identificador del pedido
      * @param direccionEntrega dirección donde se realizará la entrega
      */
-    public PedidoEncomienda(String idPedido, String direccionEntrega) {
-        super(idPedido, direccionEntrega, "Encomienda");
+    public PedidoEncomienda(String idPedido, String direccionEntrega, double distanciaKm) {
+        super(idPedido, direccionEntrega, distanciaKm, "Encomienda");
+    }
+
+    /**
+     * Calcular el tiempo de entrega del pedido
+     * se calcula a partir de 20 min, más lo sumado de 1.5 min multiplicado por los Kilómetros
+     * @return devuelve el tiempo calculado del los kilómetros multiplicado por 1.5 min
+     */
+    @Override
+    public int calcularTiempoEntrega() {
+        return (int) (20 + (1.5 * getDistanciaKm()));
     }
 
     /**
@@ -40,4 +50,11 @@ public class PedidoEncomienda extends Pedido {
         System.out.println("→ Validando peso y embalaje... OK");
         System.out.println("→ Pedido asignado a " + repartidor);
     }
+
+    @Override
+    public void mostrarResumen() {
+        super.mostrarResumen();
+        System.out.println("Tiempo estimado de entrega: " + calcularTiempoEntrega() + " minutos");
+    }
+
 }

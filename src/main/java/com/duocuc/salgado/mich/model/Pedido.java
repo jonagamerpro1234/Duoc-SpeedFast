@@ -2,13 +2,14 @@ package com.duocuc.salgado.mich.model;
 
 /**
  * Representa un pedido genérico dentro del sistema SpeedFast.
- * Contiene la información básica de un pedido y define el método
- * para asignar un repartidor.
+ * Contiene la información básica de un pedido y define métodos
+ * comunes para las clases derivadas.
  */
-public class Pedido {
+public abstract class Pedido {
 
     private final String idPedido;
     private final String direccionEntrega;
+    private final double distanciaKm;
     private final String tipoPedido;
 
     /**
@@ -16,11 +17,13 @@ public class Pedido {
      *
      * @param idPedido identificador del pedido
      * @param direccionEntrega dirección donde se realizará la entrega
+     * @param distanciaKm distancia hasta el lugar de entrega
      * @param tipoPedido tipo de pedido
      */
-    public Pedido(String idPedido, String direccionEntrega, String tipoPedido) {
+    public Pedido(String idPedido, String direccionEntrega, double distanciaKm, String tipoPedido) {
         this.idPedido = idPedido;
         this.direccionEntrega = direccionEntrega;
+        this.distanciaKm = distanciaKm;
         this.tipoPedido = tipoPedido;
     }
 
@@ -33,12 +36,19 @@ public class Pedido {
     }
 
     /**
-     * Obtiene la dirección de entrega del pedido.
-     *
+     * Obtiene la dirección de entrega.
      * @return dirección de entrega
      */
     public String getDireccionEntrega() {
         return direccionEntrega;
+    }
+
+    /**
+     * Obtiene la distancia hasta el lugar de entrega.
+     * @return distancia en kilómetros
+     */
+    public double getDistanciaKm() {
+        return distanciaKm;
     }
 
     /**
@@ -48,6 +58,23 @@ public class Pedido {
     public String getTipoPedido() {
         return tipoPedido;
     }
+
+    /**
+     * Muestra un resumen con los datos básicos del pedido.
+     */
+    public void mostrarResumen() {
+        System.out.println("Pedido" + tipoPedido + " #" + idPedido);
+        System.out.println("Dirección: " + direccionEntrega);
+        System.out.println("Distancia: " + distanciaKm + " km");
+    }
+
+    /**
+     * Calcula el tiempo estimado de entrega.
+     * Cada tipo de pedido implementa su propia lógica.
+     *
+     * @return tiempo estimado de entrega en minutos
+     */
+    public abstract int calcularTiempoEntrega();
 
     /**
      * Asigna un repartidor al pedido utilizando una lógica genérica.
