@@ -7,7 +7,8 @@ Proyecto desarrollado para la asignatura **Desarrollo Orientado a Objetos II (PR
 El proyecto está basado en el caso de estudio **SpeedFast**, una empresa de reparto a domicilio que ofrece servicios de comida, encomiendas y compras express.
 
 <!-- Si el proyecto continúa en las siguientes semanas, modificar esta sección para mantener la línea de tiempo del proyecto. -->
-El objetivo de esta actividad es aplicar conceptos de **Programación Orientada a Objetos**, principalmente herencia, sobreescritura, sobrecarga y polimorfismo.
+
+El objetivo de esta actividad es aplicar conceptos de **Programación Orientada a Objetos**, principalmente clases abstractas, herencia, sobrescritura y polimorfismo.
 
 ---
 
@@ -40,25 +41,36 @@ SpeedFast/
 
 ### `Pedido`
 
-Clase base que representa un pedido genérico y contiene los atributos:
+Clase abstracta que representa un pedido genérico dentro del sistema.
+
+Contiene los atributos comunes:
 
 * `idPedido`
 * `direccionEntrega`
-* `tipoPedido`
+* `distanciaKm`
 
-Además, define el método `asignarRepartidor()` para ser utilizado por las clases derivadas.
+Además, define:
+
+* `mostrarResumen()`: muestra los datos básicos del pedido.
+* `calcularTiempoEntrega()`: método abstracto que debe ser implementado por cada tipo de pedido.
 
 ### `PedidoComida`
 
-Representa pedidos provenientes de restaurantes y considera la validación de una mochila térmica para el repartidor.
+Representa pedidos provenientes de restaurantes.
+
+Implementa `calcularTiempoEntrega()` utilizando un tiempo base de **15 minutos**, más **2 minutos por cada kilómetro**.
 
 ### `PedidoEncomienda`
 
-Representa documentos o paquetes y considera la validación del peso y embalaje.
+Representa documentos o paquetes.
+
+Implementa `calcularTiempoEntrega()` utilizando un tiempo base de **20 minutos**, más **1,5 minutos por cada kilómetro**, ajustando el resultado a un número entero.
 
 ### `PedidoExpress`
 
-Representa compras realizadas mediante el servicio express y considera la asignación del repartidor más cercano con disponibilidad inmediata.
+Representa compras realizadas mediante el servicio express.
+
+Implementa `calcularTiempoEntrega()` utilizando un tiempo base de **10 minutos**. Si la distancia es superior a **5 km**, se agregan **5 minutos adicionales**.
 
 ---
 
@@ -66,10 +78,10 @@ Representa compras realizadas mediante el servicio express y considera la asigna
 
 El proyecto implementa:
 
-* **Herencia:** las clases especializadas heredan de `Pedido`.
-* **Sobreescritura:** cada tipo de pedido redefine `asignarRepartidor()` según sus propios requerimientos.
-* **Sobrecarga:** se implementa `asignarRepartidor(String nombreRepartidor)`.
-* **Polimorfismo:** se utilizan objetos de las clases derivadas mediante la referencia de la clase base.
+* **Clase abstracta:** `Pedido` define atributos y comportamientos comunes para los diferentes tipos de pedido.
+* **Herencia:** `PedidoComida`, `PedidoEncomienda` y `PedidoExpress` heredan de `Pedido`.
+* **Sobreescritura:** cada subclase implementa `calcularTiempoEntrega()` según sus propios requerimientos.
+* **Polimorfismo:** se utilizan objetos de las clases derivadas mediante referencias de tipo `Pedido`.
 
 ---
 
@@ -85,7 +97,9 @@ El proyecto implementa:
 
 ## ▶️ Ejecución
 
-La ejecución y prueba del sistema se realiza desde la clase `Main`, donde se crean objetos de los diferentes tipos de pedido y se prueban los métodos de asignación de repartidores.
+La ejecución y prueba del sistema se realiza desde la clase `Main`.
+
+Se crean objetos de los diferentes tipos de pedido y se utilizan los métodos `mostrarResumen()` y `calcularTiempoEntrega()` para mostrar de forma clara y comparativa la información y el tiempo estimado de entrega de cada pedido.
 
 ---
 
