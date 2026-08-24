@@ -23,30 +23,13 @@ public class Main {
                 new PedidoExpress("003", "Av. Santa Rosa 1623", 7.9d)
         };
 
+        System.out.println();
         for (Pedido pedido : pedidos) {
-            //pedido.asignarRepartidor();
+            //Metodo que muestra resumen formateado listo
             pedido.mostrarResumen();
+            System.out.println("Tiempo estimado de entrega: " + pedido.calcularTiempoEntrega() + " minutos");
             System.out.println();
         }
 
-
-        //Semana 1
-//        PedidoComida comida = (PedidoComida) pedidos[0];
-//        PedidoEncomienda encomienda = (PedidoEncomienda) pedidos[1];
-//        PedidoExpress express = (PedidoExpress) pedidos[2];
-//
-//        comida.asignarRepartidor("Juan Pérez");
-//        System.out.println();
-//        comida.mostrarResumen();
-//        System.out.println();
-//
-//        encomienda.asignarRepartidor("Camila Soto");
-//        System.out.println();
-//        encomienda.mostrarResumen();
-//        System.out.println();
-//
-//        express.asignarRepartidor("Luis Díaz");
-//        System.out.println();
-//        express.mostrarResumen();
     }
 }

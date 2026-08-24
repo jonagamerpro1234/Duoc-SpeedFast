@@ -51,10 +51,4 @@ public class PedidoEncomienda extends Pedido {
         System.out.println("→ Pedido asignado a " + repartidor);
     }
 
-    @Override
-    public void mostrarResumen() {
-        super.mostrarResumen();
-        System.out.println("Tiempo estimado de entrega: " + calcularTiempoEntrega() + " minutos");
-    }
-
 }
