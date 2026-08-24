@@ -25,7 +25,6 @@ public class Main {
 
         System.out.println();
         for (Pedido pedido : pedidos) {
-            //Metodo que muestra resumen formateado listo
             pedido.mostrarResumen();
             System.out.println("Tiempo estimado de entrega: " + pedido.calcularTiempoEntrega() + " minutos");
             System.out.println();
