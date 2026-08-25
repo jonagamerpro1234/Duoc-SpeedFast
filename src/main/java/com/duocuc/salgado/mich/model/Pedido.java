@@ -11,6 +11,7 @@ public abstract class Pedido {
     private final String direccionEntrega;
     private final double distanciaKm;
     private final String tipoPedido;
+    private boolean cancelado;
 
     /**
      * Crea un nuevo pedido.
@@ -57,6 +58,14 @@ public abstract class Pedido {
      */
     public String getTipoPedido() {
         return tipoPedido;
+    }
+
+    public void setCancelado(boolean cancelado) {
+        this.cancelado = cancelado;
+    }
+
+    public boolean isCancelado() {
+        return cancelado;
     }
 
     /**
