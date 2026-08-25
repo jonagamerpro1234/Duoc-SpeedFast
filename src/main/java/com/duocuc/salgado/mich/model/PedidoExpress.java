@@ -18,9 +18,11 @@ public class PedidoExpress extends Pedido {
     }
 
     /**
-     * Calcular el tiempo de entrega del pedido
-     * se calcula a partir de 15 min, más lo sumado de 2 min multiplicado por los Kilómetros
-     * @return devuelve el tiempo calculado del los kilómetros multiplicado por 2 min
+     * Calcula el tiempo estimado de entrega del pedido Express.
+     * El tiempo de entrega es de 10 minutos para distancias de hasta
+     * 5 kilómetros y de 15 minutos para distancias superiores a 5 kilómetros.
+     *
+     * @return tiempo estimado de entrega en minutos
      */
     @Override
     public int calcularTiempoEntrega() {
