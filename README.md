@@ -8,7 +8,7 @@ El proyecto está basado en el caso de estudio **SpeedFast**, una empresa de rep
 
 <!-- Si el proyecto continúa en las siguientes semanas, modificar esta sección para mantener la línea de tiempo del proyecto. -->
 
-El objetivo de esta actividad es aplicar conceptos de **Programación Orientada a Objetos**, principalmente clases abstractas, herencia, sobrescritura y polimorfismo.
+El objetivo de esta actividad es aplicar conceptos de **Programación Orientada a Objetos**, utilizando clases abstractas, herencia, polimorfismo, interfaces y colecciones.
 
 ---
 
@@ -28,11 +28,19 @@ SpeedFast/
                             ├── app/
                             │   └── Main.java
                             │
-                            └── model/
-                                ├── Pedido.java
-                                ├── PedidoComida.java
-                                ├── PedidoEncomienda.java
-                                └── PedidoExpress.java
+                            ├── interfaces/
+                            │   ├── Cancelable.java
+                            │   ├── Despachable.java
+                            │   └── Rastreable.java
+                            │
+                            ├── model/
+                            │   ├── Pedido.java
+                            │   ├── PedidoComida.java
+                            │   ├── PedidoEncomienda.java
+                            │   └── PedidoExpress.java
+                            │
+                            └── service/
+                                └── ControladorDeEnvios.java
 ```
 
 ---
@@ -43,34 +51,78 @@ SpeedFast/
 
 Clase abstracta que representa un pedido genérico dentro del sistema.
 
-Contiene los atributos comunes:
+Contiene información común como:
 
 * `idPedido`
 * `direccionEntrega`
 * `distanciaKm`
+* `tipoPedido`
+* `cancelado`
+* `repartidorAsignado`
 
-Además, define:
+Además, define métodos comunes como:
 
-* `mostrarResumen()`: muestra los datos básicos del pedido.
-* `calcularTiempoEntrega()`: método abstracto que debe ser implementado por cada tipo de pedido.
+* `mostrarResumen()`
+* `calcularTiempoEntrega()`
+* `asignarRepartidor()`
 
 ### `PedidoComida`
 
 Representa pedidos provenientes de restaurantes.
 
-Implementa `calcularTiempoEntrega()` utilizando un tiempo base de **15 minutos**, más **2 minutos por cada kilómetro**.
+Calcula el tiempo de entrega utilizando un tiempo base de **15 minutos**, más **2 minutos por cada kilómetro**.
 
 ### `PedidoEncomienda`
 
 Representa documentos o paquetes.
 
-Implementa `calcularTiempoEntrega()` utilizando un tiempo base de **20 minutos**, más **1,5 minutos por cada kilómetro**, ajustando el resultado a un número entero.
+Calcula el tiempo de entrega utilizando un tiempo base de **20 minutos**, más **1,5 minutos por cada kilómetro**.
 
 ### `PedidoExpress`
 
 Representa compras realizadas mediante el servicio express.
 
-Implementa `calcularTiempoEntrega()` utilizando un tiempo base de **10 minutos**. Si la distancia es superior a **5 km**, se agregan **5 minutos adicionales**.
+El tiempo estimado es de **10 minutos** para distancias de hasta 5 km y de **15 minutos** para distancias superiores.
+
+---
+
+## 🔌 Interfaces
+
+### `Cancelable`
+
+Define el comportamiento necesario para cancelar un pedido.
+
+### `Despachable`
+
+Define el comportamiento necesario para despachar un pedido.
+
+### `Rastreable`
+
+Define el comportamiento necesario para visualizar el historial de pedidos despachados.
+
+---
+
+## ⚙️ Controlador de Envíos
+
+### `ControladorDeEnvios`
+
+Clase encargada de gestionar las operaciones relacionadas con los pedidos.
+
+Implementa las interfaces:
+
+* `Cancelable`
+* `Despachable`
+* `Rastreable`
+
+Además, utiliza un `ArrayList<Pedido>` para almacenar el historial de pedidos despachados.
+
+Sus principales funciones son:
+
+* Cancelar pedidos.
+* Evitar el despacho de pedidos cancelados.
+* Despachar pedidos.
+* Registrar los pedidos despachados en el historial.
+* Mostrar el historial junto con el repartidor asignado.
 
 ---
 
@@ -78,16 +130,17 @@ Implementa `calcularTiempoEntrega()` utilizando un tiempo base de **10 minutos**
 
 El proyecto implementa:
 
-* **Clase abstracta:** `Pedido` define atributos y comportamientos comunes para los diferentes tipos de pedido.
-* **Herencia:** `PedidoComida`, `PedidoEncomienda` y `PedidoExpress` heredan de `Pedido`.
-* **Sobreescritura:** cada subclase implementa `calcularTiempoEntrega()` según sus propios requerimientos.
-* **Polimorfismo:** se utilizan objetos de las clases derivadas mediante referencias de tipo `Pedido`.
+* **Clase abstracta:** `Pedido` concentra los atributos y comportamientos comunes.
+* **Herencia:** los diferentes tipos de pedidos heredan de `Pedido`.
+* **Sobreescritura:** cada tipo de pedido implementa su propia lógica para calcular el tiempo de entrega.
+* **Sobrecarga:** se utilizan versiones de `asignarRepartidor()` con y sin parámetros.
+* **Polimorfismo:** los diferentes tipos de pedidos pueden utilizarse mediante referencias de tipo `Pedido`.
+* **Interfaces:** definen comportamientos relacionados con cancelar, despachar y rastrear pedidos.
+* **Colecciones:** se utiliza `ArrayList` para almacenar el historial de pedidos despachados.
 
 ---
 
 ## ☕ Requisitos
-
-<!-- Verificar la versión de JDK utilizada en el proyecto antes de modificar este requisito. -->
 
 * Java JDK 21 o superior.
 * IntelliJ IDEA Community Edition.
@@ -99,7 +152,14 @@ El proyecto implementa:
 
 La ejecución y prueba del sistema se realiza desde la clase `Main`.
 
-Se crean objetos de los diferentes tipos de pedido y se utilizan los métodos `mostrarResumen()` y `calcularTiempoEntrega()` para mostrar de forma clara y comparativa la información y el tiempo estimado de entrega de cada pedido.
+Durante la ejecución se demuestra:
+
+1. Creación de diferentes tipos de pedidos.
+2. Cálculo del tiempo estimado de entrega.
+3. Asignación de repartidores.
+4. Despacho de pedidos.
+5. Cancelación de pedidos.
+6. Registro y visualización del historial.
 
 ---
 
