@@ -1,10 +1,10 @@
-package com.duocuc.salgado.mich.app;
+package cl.duocuc.salgado.mich.app;
 
-import com.duocuc.salgado.mich.model.Pedido;
-import com.duocuc.salgado.mich.model.PedidoComida;
-import com.duocuc.salgado.mich.model.PedidoEncomienda;
-import com.duocuc.salgado.mich.model.PedidoExpress;
-import com.duocuc.salgado.mich.service.ControladorDeEnvios;
+import cl.duocuc.salgado.mich.model.Pedido;
+import cl.duocuc.salgado.mich.model.PedidoComida;
+import cl.duocuc.salgado.mich.model.PedidoEncomienda;
+import cl.duocuc.salgado.mich.model.PedidoExpress;
+import cl.duocuc.salgado.mich.service.ControladorDeEnvios;
 
 /**
  * Clase principal encargada de ejecutar y probar el sistema SpeedFast.

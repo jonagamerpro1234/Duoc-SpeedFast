@@ -1,9 +1,9 @@
-package com.duocuc.salgado.mich.service;
+package cl.duocuc.salgado.mich.service;
 
-import com.duocuc.salgado.mich.interfaces.Cancelable;
-import com.duocuc.salgado.mich.interfaces.Despachable;
-import com.duocuc.salgado.mich.interfaces.Rastreable;
-import com.duocuc.salgado.mich.model.Pedido;
+import cl.duocuc.salgado.mich.interfaces.Cancelable;
+import cl.duocuc.salgado.mich.interfaces.Despachable;
+import cl.duocuc.salgado.mich.interfaces.Rastreable;
+import cl.duocuc.salgado.mich.model.Pedido;
 
 import java.util.ArrayList;
 

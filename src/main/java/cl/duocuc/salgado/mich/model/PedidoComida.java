@@ -1,4 +1,4 @@
-package com.duocuc.salgado.mich.model;
+package cl.duocuc.salgado.mich.model;
 
 /**
  * Representa un pedido de comida dentro del sistema SpeedFast.
