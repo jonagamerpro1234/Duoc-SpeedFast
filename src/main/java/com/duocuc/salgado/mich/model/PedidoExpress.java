@@ -48,6 +48,7 @@ public class PedidoExpress extends Pedido {
      * @param repartidor nombre del repartidor asignado
      */
     public void asignarRepartidor(String repartidor) {
+        this.setRepartidorAsignado(repartidor);
         System.out.println("[Pedido Express]");
         System.out.println("Asignando repartidor...");
         System.out.println("→ Repartidor más cercano con disponibilidad inmediata encontrado.");

@@ -45,6 +45,7 @@ public class PedidoComida extends Pedido {
      * @param repartidor nombre del repartidor asignado
      */
     public void asignarRepartidor(String repartidor) {
+        this.setRepartidorAsignado(repartidor);
         System.out.println("[Pedido Comida]");
         System.out.println("Asignando repartidor...");
         System.out.println("→ Verificando mochila térmica... OK");

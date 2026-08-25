@@ -12,6 +12,7 @@ public abstract class Pedido {
     private final double distanciaKm;
     private final String tipoPedido;
     private boolean cancelado;
+    private String repartidorAsignado;
 
     /**
      * Crea un nuevo pedido.
@@ -60,12 +61,28 @@ public abstract class Pedido {
         return tipoPedido;
     }
 
+    /**
+     * Define el estado de cancelación del pedido.
+     * @param cancelado indica si el pedido está cancelado
+     */
     public void setCancelado(boolean cancelado) {
         this.cancelado = cancelado;
     }
 
+    /**
+     * Indica si el pedido se encuentra cancelado.
+     * @return true si el pedido está cancelado
+     */
     public boolean isCancelado() {
         return cancelado;
+    }
+
+    public String getRepartidorAsignado() {
+        return repartidorAsignado;
+    }
+
+    public void setRepartidorAsignado(String repartidorAsignado) {
+        this.repartidorAsignado = repartidorAsignado;
     }
 
     /**

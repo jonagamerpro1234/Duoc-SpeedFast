@@ -45,6 +45,7 @@ public class PedidoEncomienda extends Pedido {
      * @param repartidor nombre del repartidor asignado
      */
     public void asignarRepartidor(String repartidor) {
+        this.setRepartidorAsignado(repartidor);
         System.out.println("[Pedido Encomienda]");
         System.out.println("Asignando repartidor...");
         System.out.println("→ Validando peso y embalaje... OK");

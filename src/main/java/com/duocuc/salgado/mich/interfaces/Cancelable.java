@@ -4,6 +4,6 @@ import com.duocuc.salgado.mich.model.Pedido;
 
 public interface Cancelable {
 
-    void cancel(Pedido pedido);
+    void cancelar(Pedido pedido);
 
 }
