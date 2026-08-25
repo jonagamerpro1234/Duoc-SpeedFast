@@ -21,7 +21,7 @@ public class ControladorDeEnvios implements Cancelable, Despachable, Rastreable 
     }
 
     /**
-     * Cancela un pedido y lo agrega al historial.
+     * Cancela un pedido.
      * @param pedido pedido que será cancelado
      */
     @Override
@@ -47,7 +47,7 @@ public class ControladorDeEnvios implements Cancelable, Despachable, Rastreable 
             }
 
             historial.add(pedido);
-            System.out.println("Pedido despachado correctamente.");
+            System.out.println("Pedido #" + pedido.getIdPedido() + " despachado correctamente.");
         }
     }
 

@@ -77,10 +77,18 @@ public abstract class Pedido {
         return cancelado;
     }
 
+    /**
+     * Obtiene el nombre del repartidor asignado al pedido.
+     * @return nombre del repartidor asignado
+     */
     public String getRepartidorAsignado() {
         return repartidorAsignado;
     }
 
+    /**
+     * Asigna un repartidor al pedido.
+     * @param repartidorAsignado nombre del repartidor asignado
+     */
     public void setRepartidorAsignado(String repartidorAsignado) {
         this.repartidorAsignado = repartidorAsignado;
     }
@@ -89,7 +97,8 @@ public abstract class Pedido {
      * Muestra un resumen con los datos básicos del pedido.
      */
     public void mostrarResumen() {
-        System.out.println("Pedido" + tipoPedido + " #" + idPedido);
+        System.out.println("[Pedido " + tipoPedido + "]");
+        System.out.println("Pedido #" + idPedido);
         System.out.println("Dirección: " + direccionEntrega);
         System.out.println("Distancia: " + distanciaKm + " km");
     }
