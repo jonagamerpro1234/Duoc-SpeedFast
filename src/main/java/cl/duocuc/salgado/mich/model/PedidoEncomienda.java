@@ -24,7 +24,7 @@ public class PedidoEncomienda extends Pedido {
      */
     @Override
     public int calcularTiempoEntrega() {
-        return (int) (20 + (1.5 * getDistanciaKm()));
+        return (int) Math.round(20 + (1.5 * getDistanciaKm()));
     }
 
     /**
