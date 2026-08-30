@@ -21,7 +21,7 @@ SpeedFast/
 └── src/
     └── main/
         └── java/
-            └── com/
+            └── cl/
                 └── duocuc/
                     └── salgado/
                         └── mich/
