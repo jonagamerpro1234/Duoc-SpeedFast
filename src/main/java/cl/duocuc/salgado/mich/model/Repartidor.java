@@ -1,8 +1,9 @@
 package cl.duocuc.salgado.mich.model;
 
 import java.util.List;
+import java.util.Random;
 
-public class Repartidor {
+public class Repartidor implements Runnable {
 
     private String nombre;
     private List<Pedido> pedidos;
@@ -14,10 +15,6 @@ public class Repartidor {
 
     public String getNombre() {
         return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public List<Pedido> getPedidos() {
@@ -32,7 +29,28 @@ public class Repartidor {
         }
     }
 
-    public void setPedidos(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
+    @Override
+    public void run() {
+        Random random = new Random();
+
+        for (Pedido pedido : pedidos) {
+
+            System.out.println("[Repartidor: " + nombre + "] Entregando Pedido"
+                    + pedido.getTipoPedido()
+                    + " #" + pedido.getIdPedido() + "...");
+
+            try {
+                int tiempoEspera = random.nextInt(2000) + 1000;
+                Thread.sleep(tiempoEspera);
+
+                System.out.println("[Repartidor: " + nombre + "] Pedido #"
+                        + pedido.getIdPedido() + " entregado.");
+
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.out.println("La entrega fue interrumpida.");
+                return;
+            }
+        }
     }
 }
