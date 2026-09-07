@@ -1,9 +1,10 @@
 package cl.duocuc.salgado.mich.app;
 
-import cl.duocuc.salgado.mich.model.Pedido;
-import cl.duocuc.salgado.mich.model.PedidoComida;
-import cl.duocuc.salgado.mich.model.PedidoEncomienda;
-import cl.duocuc.salgado.mich.model.PedidoExpress;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import cl.duocuc.salgado.mich.model.*;
 import cl.duocuc.salgado.mich.service.ControladorDeEnvios;
 
 /**
@@ -58,5 +59,8 @@ public class Main {
 
         // Mostrar historial
         controlador.verHistorial();
+
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+
     }
 }
