@@ -5,8 +5,8 @@ import java.util.Random;
 
 public class Repartidor implements Runnable {
 
-    private String nombre;
-    private List<Pedido> pedidos;
+    private final String nombre;
+    private final List<Pedido> pedidos;
 
     public Repartidor(String nombre, List<Pedido> pedidos) {
         this.nombre = nombre;
