@@ -10,7 +10,7 @@ import java.util.Random;
 public class Repartidor implements Runnable {
 
     private String nombre;
-    private List<Pedido> pedidos;
+    private final List<Pedido> pedidos;
 
     /**
      * Crea un nuevo repartidor.
@@ -71,7 +71,6 @@ public class Repartidor implements Runnable {
     public void run() {
 
         Random random = new Random();
-
         for (Pedido pedido : pedidos) {
 
             System.out.println(
@@ -83,7 +82,6 @@ public class Repartidor implements Runnable {
             try {
 
                 int tiempoEntrega = random.nextInt(2000) + 1000;
-
                 Thread.sleep(tiempoEntrega);
 
                 System.out.println(
@@ -92,16 +90,11 @@ public class Repartidor implements Runnable {
                                 + " #" + pedido.getIdPedido()
                                 + " entregado."
                 );
+                System.out.println();
 
             } catch (InterruptedException e) {
-
                 Thread.currentThread().interrupt();
-
-                System.out.println(
-                        "[Repartidor: " + nombre
-                                + "] La entrega fue interrumpida."
-                );
-
+                System.out.println("[Repartidor: " + nombre + "] La entrega fue interrumpida.");
                 return;
             }
         }
