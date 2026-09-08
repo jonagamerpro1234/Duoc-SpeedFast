@@ -54,7 +54,6 @@ public class Main {
         Repartidor camila = new Repartidor("Camila", pedidosCamila);
         Repartidor daniela = new Repartidor("Daniela", pedidosDaniela);
 
-
         // Crear ExecutorService con tres hilos
         ExecutorService executor = Executors.newFixedThreadPool(3);
 
@@ -63,7 +62,9 @@ public class Main {
 
         // Ejecutar repartidores de forma concurrente
         executor.submit(luis);
+        System.out.println();
         executor.submit(camila);
+        System.out.println();
         executor.submit(daniela);
 
         // No se aceptan nuevas tareas
