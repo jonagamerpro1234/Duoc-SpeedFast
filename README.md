@@ -6,9 +6,7 @@ Proyecto desarrollado para la asignatura **Desarrollo Orientado a Objetos II (PR
 
 El proyecto está basado en el caso de estudio **SpeedFast**, una empresa de reparto a domicilio que ofrece servicios de comida, encomiendas y compras express.
 
-<!-- Si el proyecto continúa en las siguientes semanas, modificar esta sección para mantener la línea de tiempo del proyecto. -->
-
-El objetivo de esta actividad es aplicar conceptos de **Programación Orientada a Objetos**, utilizando clases abstractas, herencia, polimorfismo, interfaces y colecciones.
+El objetivo del proyecto es aplicar conceptos de **Programación Orientada a Objetos y programación concurrente**, utilizando clases abstractas, herencia, polimorfismo, interfaces, colecciones y ejecución de tareas mediante múltiples hilos.
 
 ---
 
@@ -37,7 +35,8 @@ SpeedFast/
                             │   ├── Pedido.java
                             │   ├── PedidoComida.java
                             │   ├── PedidoEncomienda.java
-                            │   └── PedidoExpress.java
+                            │   ├── PedidoExpress.java
+                            │   └── Repartidor.java
                             │
                             └── service/
                                 └── ControladorDeEnvios.java
@@ -78,11 +77,27 @@ Representa documentos o paquetes.
 
 Calcula el tiempo de entrega utilizando un tiempo base de **20 minutos**, más **1,5 minutos por cada kilómetro**.
 
+El resultado del cálculo es redondeado a un número entero.
+
 ### `PedidoExpress`
 
 Representa compras realizadas mediante el servicio express.
 
 El tiempo estimado es de **10 minutos** para distancias de hasta 5 km y de **15 minutos** para distancias superiores.
+
+### `Repartidor`
+
+Representa a un repartidor encargado de realizar las entregas de los pedidos asignados.
+
+Implementa la interfaz `Runnable`, permitiendo que cada repartidor pueda ejecutarse como una tarea independiente.
+
+Cada repartidor:
+
+* Posee un nombre.
+* Mantiene una lista de pedidos asignados.
+* Procesa sus pedidos de forma secuencial.
+* Simula el tiempo de entrega utilizando `Thread.sleep()`.
+* Puede ejecutarse de forma concurrente junto con otros repartidores.
 
 ---
 
@@ -126,7 +141,40 @@ Sus principales funciones son:
 
 ---
 
-## 🔄 Conceptos de POO Aplicados
+## 🧵 Concurrencia
+
+La simulación de entregas utiliza programación concurrente para representar el trabajo simultáneo de varios repartidores.
+
+Cada objeto `Repartidor` implementa `Runnable` y es ejecutado mediante un `ExecutorService`.
+
+El sistema utiliza:
+
+* `Runnable` para definir las tareas de los repartidores.
+* `ExecutorService` para administrar la ejecución de los hilos.
+* `Executors.newFixedThreadPool(3)` para ejecutar tres repartidores.
+* `Thread.sleep()` para simular el tiempo de entrega.
+
+Los repartidores trabajan de forma concurrente, mientras que los pedidos de cada repartidor son procesados de forma secuencial.
+
+```text
+ExecutorService
+        │
+        ├── Repartidor Luis
+        │      ├── Pedido 101
+        │      └── Pedido 102
+        │
+        ├── Repartidor Camila
+        │      ├── Pedido 103
+        │      └── Pedido 104
+        │
+        └── Repartidor Daniela
+               ├── Pedido 105
+               └── Pedido 106
+```
+
+---
+
+## 🔄 Conceptos Aplicados
 
 El proyecto implementa:
 
@@ -136,7 +184,10 @@ El proyecto implementa:
 * **Sobrecarga:** se utilizan versiones de `asignarRepartidor()` con y sin parámetros.
 * **Polimorfismo:** los diferentes tipos de pedidos pueden utilizarse mediante referencias de tipo `Pedido`.
 * **Interfaces:** definen comportamientos relacionados con cancelar, despachar y rastrear pedidos.
-* **Colecciones:** se utiliza `ArrayList` para almacenar el historial de pedidos despachados.
+* **Colecciones:** se utilizan listas para almacenar pedidos e historial.
+* **Concurrencia:** varios repartidores pueden ejecutar sus entregas simultáneamente.
+* **Runnable:** permite definir el comportamiento ejecutable de cada repartidor.
+* **ExecutorService:** administra la ejecución concurrente de los repartidores.
 
 ---
 
@@ -155,11 +206,13 @@ La ejecución y prueba del sistema se realiza desde la clase `Main`.
 Durante la ejecución se demuestra:
 
 1. Creación de diferentes tipos de pedidos.
-2. Cálculo del tiempo estimado de entrega.
-3. Asignación de repartidores.
-4. Despacho de pedidos.
-5. Cancelación de pedidos.
-6. Registro y visualización del historial.
+2. Creación de repartidores.
+3. Asignación de pedidos a cada repartidor.
+4. Procesamiento secuencial de los pedidos por cada repartidor.
+5. Ejecución concurrente de múltiples repartidores mediante `ExecutorService`.
+6. Simulación del tiempo de entrega utilizando `Thread.sleep()`.
+
+Debido a la ejecución concurrente, el orden de los mensajes en consola puede variar entre cada ejecución.
 
 ---
 

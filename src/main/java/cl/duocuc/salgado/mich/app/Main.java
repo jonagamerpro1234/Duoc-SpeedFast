@@ -67,5 +67,11 @@ public class Main {
 
         // No se aceptan nuevas tareas
         executor.shutdown();
+
+        try {
+            executor.awaitTermination(1, java.util.concurrent.TimeUnit.MINUTES);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }
