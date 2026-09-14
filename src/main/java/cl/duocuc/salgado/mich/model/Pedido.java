@@ -137,6 +137,15 @@ public abstract class Pedido {
         System.out.println("Prioridad: " + prioridad.getNombre());
     }
 
+    @Override
+    public String toString() {
+        return "Pedido #" + id
+                + " - " + tipoPedido.getNombre()
+                + " - Dirección: " + direccionEntrega
+                + " - Estado: " + estado
+                + " - Prioridad: " + prioridad.getNombre();
+    }
+
     /**
      * Calcula el tiempo estimado de entrega.
      * Cada tipo de pedido implementa su propia lógica.
