@@ -14,7 +14,7 @@ public class PedidoEncomienda extends Pedido {
      * @param direccionEntrega dirección donde se realizará la entrega
      */
     public PedidoEncomienda(String idPedido, String direccionEntrega, double distanciaKm) {
-        super(idPedido, direccionEntrega, distanciaKm, "Encomienda");
+        super(idPedido, direccionEntrega, distanciaKm, TipoPedido.ENCOMIENDA);
     }
 
     /**

@@ -7,12 +7,16 @@ package cl.duocuc.salgado.mich.model;
  */
 public abstract class Pedido {
 
+    private  int id;
+
     private final String idPedido;
     private final String direccionEntrega;
     private final double distanciaKm;
-    private final String tipoPedido;
+    private final TipoPedido tipoPedido;
     private boolean cancelado;
     private String repartidorAsignado;
+
+    private final EstadoPedido estado;
 
     /**
      * Crea un nuevo pedido.
@@ -22,11 +26,21 @@ public abstract class Pedido {
      * @param distanciaKm distancia hasta el lugar de entrega
      * @param tipoPedido tipo de pedido
      */
-    public Pedido(String idPedido, String direccionEntrega, double distanciaKm, String tipoPedido) {
+    public Pedido(String idPedido, String direccionEntrega, double distanciaKm, TipoPedido tipoPedido) {
         this.idPedido = idPedido;
         this.direccionEntrega = direccionEntrega;
         this.distanciaKm = distanciaKm;
         this.tipoPedido = tipoPedido;
+        this.estado = EstadoPedido.PENDIENTE;
+        this.cancelado = false;
+    }
+
+    /**
+     * Obtiene el identificador del pedido.
+     * @return identificador del pedido
+     */
+    public int getId() {
+        return id;
     }
 
     /**
@@ -57,8 +71,15 @@ public abstract class Pedido {
      * Obtiene el tipo de pedido.
      * @return tipo de pedido
      */
-    public String getTipoPedido() {
+    public TipoPedido getTipoPedido() {
         return tipoPedido;
+    }
+
+    //---------------
+
+
+    public EstadoPedido getEstado() {
+        return estado;
     }
 
     /**
@@ -76,6 +97,8 @@ public abstract class Pedido {
     public boolean isCancelado() {
         return cancelado;
     }
+
+    //----------
 
     /**
      * Obtiene el nombre del repartidor asignado al pedido.
@@ -119,4 +142,7 @@ public abstract class Pedido {
     public void asignarRepartidor() {
         System.out.println("Asignando repartidor para el pedido...");
     }
+
+
+
 }

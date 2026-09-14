@@ -14,7 +14,7 @@ public class PedidoExpress extends Pedido {
      * @param direccionEntrega dirección donde se realizará la entrega
      */
     public PedidoExpress(String idPedido, String direccionEntrega,  double distanciaKm) {
-        super(idPedido, direccionEntrega, distanciaKm, "Express");
+        super(idPedido, direccionEntrega, distanciaKm, TipoPedido.EXPRESS);
     }
 
     /**
