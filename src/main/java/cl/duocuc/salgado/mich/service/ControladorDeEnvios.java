@@ -33,10 +33,11 @@ public class ControladorDeEnvios implements Cancelable, Despachable, Rastreable 
         if (pedido != null) {
             //verificar que el pedido se encuentre cancelado en tal caso retorna y no cancelar nuevamente el pedido
             if(pedido.getEstado().equals(EstadoPedido.CANCELADO)){
+                System.out.println("El pedido ya se encuentra cancelado");
                 return;
             }
 
-            pedido.setCancelado(true);
+            pedido.setEstado(EstadoPedido.CANCELADO);
 
             System.out.println("Cancelando pedido " + pedido.getTipoPedido().getNombre() + " #" + pedido.getId() + "...");
             System.out.println("→ Pedido cancelado exitosamente.");
@@ -51,7 +52,7 @@ public class ControladorDeEnvios implements Cancelable, Despachable, Rastreable 
     public void despachar(Pedido pedido) {
         if (pedido != null) {
 
-            if (pedido.isCancelado()) {
+            if (pedido.getEstado().equals(EstadoPedido.CANCELADO)) {
                 System.out.println("El pedido #" + pedido.getId() + " no puede ser despachado porque está cancelado.");
                 return;
             }
