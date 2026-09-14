@@ -1,5 +1,7 @@
 package cl.duocuc.salgado.mich.model;
 
+import cl.duocuc.salgado.mich.model.enums.TipoPedido;
+
 /**
  * Representa un pedido de encomienda dentro del sistema SpeedFast.
  * Este tipo de pedido requiere validar el peso y el embalaje

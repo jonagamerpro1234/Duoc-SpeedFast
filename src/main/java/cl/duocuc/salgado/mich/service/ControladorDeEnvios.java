@@ -7,6 +7,9 @@ import cl.duocuc.salgado.mich.model.Pedido;
 
 import java.util.ArrayList;
 
+
+//Dividir responsabilidades entre pedidos  junto con el runnable
+
 /**
  * Clase encargada de controlar y gestionar los diferentes tipos de pedidos
  */
@@ -66,4 +69,5 @@ public class ControladorDeEnvios implements Cancelable, Despachable, Rastreable 
             System.out.println("- Pedido" + pedido.getTipoPedido() + " #" + pedido.getIdPedido() + " - entregado por " + pedido.getRepartidorAsignado());
         }
     }
+
 }

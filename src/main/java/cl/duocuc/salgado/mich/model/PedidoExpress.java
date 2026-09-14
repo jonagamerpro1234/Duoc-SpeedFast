@@ -1,5 +1,7 @@
 package cl.duocuc.salgado.mich.model;
 
+import cl.duocuc.salgado.mich.model.enums.TipoPedido;
+
 /**
  * Representa un pedido Express dentro del sistema SpeedFast.
  * Este tipo de pedido requiere asignar el repartidor más cercano

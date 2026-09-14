@@ -1,5 +1,8 @@
 package cl.duocuc.salgado.mich.model;
 
+import cl.duocuc.salgado.mich.model.enums.EstadoPedido;
+import cl.duocuc.salgado.mich.model.enums.TipoPedido;
+
 /**
  * Representa un pedido genérico dentro del sistema SpeedFast.
  * Contiene la información básica de un pedido y define métodos

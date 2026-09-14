@@ -50,7 +50,7 @@ public class Main {
         pedidosDaniela.add(express2);
 
         // Crear repartidores
-        Repartidor luis = new Repartidor("Luis", pedidosLuis);
+        Repartidor luis = new Repartidor(   "Luis", pedidosLuis);
         Repartidor camila = new Repartidor("Camila", pedidosCamila);
         Repartidor daniela = new Repartidor("Daniela", pedidosDaniela);
 
@@ -73,5 +73,6 @@ public class Main {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+
     }
 }
