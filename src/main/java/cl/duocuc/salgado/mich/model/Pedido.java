@@ -1,6 +1,7 @@
 package cl.duocuc.salgado.mich.model;
 
 import cl.duocuc.salgado.mich.model.enums.EstadoPedido;
+import cl.duocuc.salgado.mich.model.enums.PrioridadPedido;
 import cl.duocuc.salgado.mich.model.enums.TipoPedido;
 
 /**
@@ -10,14 +11,14 @@ import cl.duocuc.salgado.mich.model.enums.TipoPedido;
  */
 public abstract class Pedido {
 
-    //atributos del pedido
+    // Atributos del pedido
     private final int id;
     private final String direccionEntrega;
     private final double distanciaKm;
-    private final TipoPedido tipoPedido;
-    private boolean cancelado;
     private String repartidorAsignado;
+    private final TipoPedido tipoPedido;
     private EstadoPedido estado;
+    private PrioridadPedido prioridad;
 
     /**
      * Crea un nuevo pedido.
@@ -33,7 +34,7 @@ public abstract class Pedido {
         this.distanciaKm = distanciaKm;
         this.tipoPedido = tipoPedido;
         this.estado = EstadoPedido.PENDIENTE;
-        this.cancelado = false;
+        this.prioridad = PrioridadPedido.MEDIA;
     }
 
     /**
@@ -68,37 +69,48 @@ public abstract class Pedido {
         return tipoPedido;
     }
 
-    //---------------
-
-
+    /**
+     * Obtiene el estado actual del pedido.
+     * @return estado del pedido
+     */
     public EstadoPedido getEstado() {
         return estado;
     }
 
+    /**
+     * Actualiza el estado del pedido.
+     * @param estado nuevo estado del pedido
+     */
     public void setEstado(EstadoPedido estado) {
         this.estado = estado;
     }
 
     /**
-     * Define el estado de cancelación del pedido.
-     * @param cancelado indica si el pedido está cancelado
+     * Obtiene la prioridad del pedido.
+     * @return prioridad del pedido
      */
-    public void setCancelado(boolean cancelado) {
-        this.cancelado = cancelado;
+    public PrioridadPedido getPrioridad() {
+        return prioridad;
     }
 
     /**
-     * Indica si el pedido se encuentra cancelado.
-     * @return true si el pedido está cancelado
+     * Modifica la prioridad del pedido.
+     * @param prioridad nueva prioridad del pedido
      */
-    public boolean isCancelado() {
-        return cancelado;
+    public void setPrioridad(PrioridadPedido prioridad) {
+        this.prioridad = prioridad;
     }
 
-    //----------
+    /**
+     * Indica si el pedido se encuentra disponible para ser retirado.
+     * @return true si el pedido está pendiente
+     */
+    public boolean estaDisponible() {
+        return estado == EstadoPedido.PENDIENTE;
+    }
 
     /**
-     * Obtiene el nombre del repartidor asignado al pedido.
+     * Obtiene el nombre del repartidor asignado.
      * @return nombre del repartidor asignado
      */
     public String getRepartidorAsignado() {
@@ -121,25 +133,21 @@ public abstract class Pedido {
         System.out.println("Pedido #" + id);
         System.out.println("Dirección: " + direccionEntrega);
         System.out.println("Distancia: " + distanciaKm + " km");
+        System.out.println("Estado: " + estado);
+        System.out.println("Prioridad: " + prioridad.getNombre());
     }
 
     /**
      * Calcula el tiempo estimado de entrega.
      * Cada tipo de pedido implementa su propia lógica.
-     *
      * @return tiempo estimado de entrega en minutos
      */
     public abstract int calcularTiempoEntrega();
 
     /**
      * Asigna un repartidor al pedido utilizando una lógica genérica.
-     * Este método puede ser sobrescrito por las clases derivadas
-     * para implementar comportamientos específicos.
      */
     public void asignarRepartidor() {
         System.out.println("Asignando repartidor para el pedido...");
     }
-
-
-
 }
