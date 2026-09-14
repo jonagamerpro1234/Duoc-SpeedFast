@@ -8,18 +8,16 @@ import cl.duocuc.salgado.mich.model.enums.EstadoPedido;
 
 import java.util.ArrayList;
 
-
-//Dividir responsabilidades entre pedidos  junto con el runnable
-
 /**
- * Clase encargada de controlar y gestionar los diferentes tipos de pedidos
+ * Clase encargada de controlar y gestionar los diferentes tipos de pedidos.
  */
 public class ControladorDeEnvios implements Cancelable, Despachable, Rastreable {
 
-    //Atributos
     private final ArrayList<Pedido> historial;
 
-    //Constructor
+    /**
+     * Crea un nuevo controlador de envíos.
+     */
     public ControladorDeEnvios() {
         historial = new ArrayList<>();
     }
@@ -31,15 +29,20 @@ public class ControladorDeEnvios implements Cancelable, Despachable, Rastreable 
     @Override
     public void cancelar(Pedido pedido) {
         if (pedido != null) {
-            //verificar que el pedido se encuentre cancelado en tal caso retorna y no cancelar nuevamente el pedido
-            if(pedido.getEstado().equals(EstadoPedido.CANCELADO)){
-                System.out.println("El pedido ya se encuentra cancelado");
+
+            if (pedido.getEstado() == EstadoPedido.CANCELADO) {
+                System.out.println("El pedido ya se encuentra cancelado.");
                 return;
             }
 
             pedido.setEstado(EstadoPedido.CANCELADO);
 
-            System.out.println("Cancelando pedido " + pedido.getTipoPedido().getNombre() + " #" + pedido.getId() + "...");
+            System.out.println(
+                    "Cancelando pedido "
+                            + pedido.getTipoPedido().getNombre()
+                            + " #" + pedido.getId() + "..."
+            );
+
             System.out.println("→ Pedido cancelado exitosamente.");
         }
     }
@@ -52,13 +55,19 @@ public class ControladorDeEnvios implements Cancelable, Despachable, Rastreable 
     public void despachar(Pedido pedido) {
         if (pedido != null) {
 
-            if (pedido.getEstado().equals(EstadoPedido.CANCELADO)) {
-                System.out.println("El pedido #" + pedido.getId() + " no puede ser despachado porque está cancelado.");
+            if (pedido.getEstado() == EstadoPedido.CANCELADO) {
+                System.out.println("El pedido #" + pedido.getId() +" no puede ser despachado porque está cancelado.");
+                return;
+            }
+
+            if (historial.contains(pedido)) {
+                System.out.println("El pedido #" + pedido.getId()+ " ya se encuentra en el historial.");
                 return;
             }
 
             historial.add(pedido);
-            System.out.println("Pedido #" + pedido.getId() + " despachado correctamente.");
+
+            System.out.println("Pedido #" + pedido.getId()+ " despachado correctamente.");
         }
     }
 
@@ -73,9 +82,14 @@ public class ControladorDeEnvios implements Cancelable, Despachable, Rastreable 
         }
 
         System.out.println("Historial:");
+
         for (Pedido pedido : historial) {
-            System.out.println("- Pedido" + pedido.getTipoPedido().getNombre() + " #" + pedido.getId() + " - entregado por " + pedido.getRepartidorAsignado());
+            System.out.println(
+                    "- Pedido " + pedido.getTipoPedido().getNombre()
+                            + " #" + pedido.getId()
+                            + " - entregado por "
+                            + pedido.getRepartidorAsignado()
+            );
         }
     }
-
 }
