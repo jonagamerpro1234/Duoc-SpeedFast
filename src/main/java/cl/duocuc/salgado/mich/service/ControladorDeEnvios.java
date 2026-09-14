@@ -31,7 +31,7 @@ public class ControladorDeEnvios implements Cancelable, Despachable, Rastreable 
     public void cancelar(Pedido pedido) {
         if (pedido != null) {
             pedido.setCancelado(true);
-            System.out.println("Cancelando pedido " + pedido.getTipoPedido() + " #" + pedido.getIdPedido() + "...");
+            System.out.println("Cancelando pedido " + pedido.getTipoPedido() + " #" + pedido.getId() + "...");
             System.out.println("→ Pedido cancelado exitosamente.");
         }
     }
@@ -45,12 +45,12 @@ public class ControladorDeEnvios implements Cancelable, Despachable, Rastreable 
         if (pedido != null) {
 
             if (pedido.isCancelado()) {
-                System.out.println("El pedido #" + pedido.getIdPedido() + " no puede ser despachado porque está cancelado.");
+                System.out.println("El pedido #" + pedido.getId() + " no puede ser despachado porque está cancelado.");
                 return;
             }
 
             historial.add(pedido);
-            System.out.println("Pedido #" + pedido.getIdPedido() + " despachado correctamente.");
+            System.out.println("Pedido #" + pedido.getId() + " despachado correctamente.");
         }
     }
 
@@ -66,7 +66,7 @@ public class ControladorDeEnvios implements Cancelable, Despachable, Rastreable 
 
         System.out.println("Historial:");
         for (Pedido pedido : historial) {
-            System.out.println("- Pedido" + pedido.getTipoPedido() + " #" + pedido.getIdPedido() + " - entregado por " + pedido.getRepartidorAsignado());
+            System.out.println("- Pedido" + pedido.getTipoPedido() + " #" + pedido.getId() + " - entregado por " + pedido.getRepartidorAsignado());
         }
     }
 
