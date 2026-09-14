@@ -153,10 +153,4 @@ public abstract class Pedido {
      */
     public abstract int calcularTiempoEntrega();
 
-    /**
-     * Asigna un repartidor al pedido utilizando una lógica genérica.
-     */
-    public void asignarRepartidor() {
-        System.out.println("Asignando repartidor para el pedido...");
-    }
 }

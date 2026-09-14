@@ -4,8 +4,6 @@ import cl.duocuc.salgado.mich.model.enums.TipoPedido;
 
 /**
  * Representa un pedido de encomienda dentro del sistema SpeedFast.
- * Este tipo de pedido requiere validar el peso y el embalaje
- * antes de realizar la asignación del repartidor.
  */
 public class PedidoEncomienda extends Pedido {
 
@@ -14,44 +12,20 @@ public class PedidoEncomienda extends Pedido {
      *
      * @param idPedido identificador del pedido
      * @param direccionEntrega dirección donde se realizará la entrega
+     * @param distanciaKm distancia hasta el lugar de entrega
      */
     public PedidoEncomienda(int idPedido, String direccionEntrega, double distanciaKm) {
         super(idPedido, direccionEntrega, distanciaKm, TipoPedido.ENCOMIENDA);
     }
 
     /**
-     * Calcular el tiempo de entrega del pedido
-     * se calcula a partir de 20 min, más lo sumado de 1.5 min multiplicado por los Kilómetros
-     * @return devuelve el tiempo calculado del los kilómetros multiplicado por 1.5 min
+     * Calcula el tiempo estimado de entrega del pedido.
+     * Se consideran 20 minutos base más 1.5 minutos por cada kilómetro.
+     *
+     * @return tiempo estimado de entrega en minutos
      */
     @Override
     public int calcularTiempoEntrega() {
         return (int) Math.round(20 + (1.5 * getDistanciaKm()));
     }
-
-    /**
-     * Sobrescribe el método de asignación de repartidor para
-     * realizar la validación del peso y embalaje.
-     */
-    @Override
-    public void asignarRepartidor() {
-        System.out.println("[Pedido Encomienda]");
-        System.out.println("Asignando repartidor...");
-        System.out.println("→ Validando peso y embalaje... OK");
-    }
-
-    /**
-     * Asigna un repartidor específico al pedido de encomienda
-     * realizando la validación correspondiente.
-     *
-     * @param repartidor nombre del repartidor asignado
-     */
-    public void asignarRepartidor(String repartidor) {
-        this.setRepartidorAsignado(repartidor);
-        System.out.println("[Pedido Encomienda]");
-        System.out.println("Asignando repartidor...");
-        System.out.println("→ Validando peso y embalaje... OK");
-        System.out.println("→ Pedido asignado a " + repartidor);
-    }
-
 }
