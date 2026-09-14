@@ -75,7 +75,7 @@ public class Repartidor implements Runnable {
 
             System.out.println(
                     "[Repartidor: " + nombre + "] Entregando Pedido"
-                            + pedido.getTipoPedido()
+                            + pedido.getTipoPedido().getNombre()
                             + " #" + pedido.getId() + "..."
             );
 
@@ -86,7 +86,7 @@ public class Repartidor implements Runnable {
 
                 System.out.println(
                         "[Repartidor: " + nombre + "] Pedido"
-                                + pedido.getTipoPedido()
+                                + pedido.getTipoPedido().getNombre()
                                 + " #" + pedido.getId()
                                 + " entregado."
                 );

@@ -10,16 +10,14 @@ import cl.duocuc.salgado.mich.model.enums.TipoPedido;
  */
 public abstract class Pedido {
 
+    //atributos del pedido
     private final int id;
-
-    private  String idPedido;
     private final String direccionEntrega;
     private final double distanciaKm;
     private final TipoPedido tipoPedido;
     private boolean cancelado;
     private String repartidorAsignado;
-
-    private final EstadoPedido estado;
+    private EstadoPedido estado;
 
     /**
      * Crea un nuevo pedido.
@@ -44,14 +42,6 @@ public abstract class Pedido {
      */
     public int getId() {
         return id;
-    }
-
-    /**
-     * Obtiene el identificador del pedido.
-     * @return identificador del pedido
-     */
-    public String getIdPedido() {
-        return idPedido;
     }
 
     /**
@@ -83,6 +73,10 @@ public abstract class Pedido {
 
     public EstadoPedido getEstado() {
         return estado;
+    }
+
+    public void setEstado(EstadoPedido estado) {
+        this.estado = estado;
     }
 
     /**
@@ -123,8 +117,8 @@ public abstract class Pedido {
      * Muestra un resumen con los datos básicos del pedido.
      */
     public void mostrarResumen() {
-        System.out.println("[Pedido " + tipoPedido + "]");
-        System.out.println("Pedido #" + idPedido);
+        System.out.println("[Pedido " + tipoPedido.getNombre() + "]");
+        System.out.println("Pedido #" + id);
         System.out.println("Dirección: " + direccionEntrega);
         System.out.println("Distancia: " + distanciaKm + " km");
     }

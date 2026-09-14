@@ -4,6 +4,7 @@ import cl.duocuc.salgado.mich.interfaces.Cancelable;
 import cl.duocuc.salgado.mich.interfaces.Despachable;
 import cl.duocuc.salgado.mich.interfaces.Rastreable;
 import cl.duocuc.salgado.mich.model.Pedido;
+import cl.duocuc.salgado.mich.model.enums.EstadoPedido;
 
 import java.util.ArrayList;
 
@@ -30,8 +31,14 @@ public class ControladorDeEnvios implements Cancelable, Despachable, Rastreable 
     @Override
     public void cancelar(Pedido pedido) {
         if (pedido != null) {
+            //verificar que el pedido se encuentre cancelado en tal caso retorna y no cancelar nuevamente el pedido
+            if(pedido.getEstado().equals(EstadoPedido.CANCELADO)){
+                return;
+            }
+
             pedido.setCancelado(true);
-            System.out.println("Cancelando pedido " + pedido.getTipoPedido() + " #" + pedido.getId() + "...");
+
+            System.out.println("Cancelando pedido " + pedido.getTipoPedido().getNombre() + " #" + pedido.getId() + "...");
             System.out.println("→ Pedido cancelado exitosamente.");
         }
     }
@@ -66,7 +73,7 @@ public class ControladorDeEnvios implements Cancelable, Despachable, Rastreable 
 
         System.out.println("Historial:");
         for (Pedido pedido : historial) {
-            System.out.println("- Pedido" + pedido.getTipoPedido() + " #" + pedido.getId() + " - entregado por " + pedido.getRepartidorAsignado());
+            System.out.println("- Pedido" + pedido.getTipoPedido().getNombre() + " #" + pedido.getId() + " - entregado por " + pedido.getRepartidorAsignado());
         }
     }
 
