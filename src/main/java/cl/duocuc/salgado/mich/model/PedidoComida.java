@@ -15,7 +15,7 @@ public class PedidoComida extends Pedido {
      * @param idPedido identificador del pedido
      * @param direccionEntrega dirección donde se realizará la entrega
      */
-    public PedidoComida(String idPedido, String direccionEntrega, double distanciaKm) {
+    public PedidoComida(int idPedido, String direccionEntrega, double distanciaKm) {
         super(idPedido, direccionEntrega, distanciaKm,  TipoPedido.COMIDA);
     }
 

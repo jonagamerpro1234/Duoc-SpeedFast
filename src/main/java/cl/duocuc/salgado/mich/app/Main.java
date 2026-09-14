@@ -25,16 +25,16 @@ public class Main {
     public static void main(String[] args) {
 
         // Pedidos del repartidor Luis
-        Pedido comida1 = new PedidoComida("101", "Av. Las Condes 123", 10.2d);
-        Pedido encomienda1 = new PedidoEncomienda("102", "Av. Santa Rosa 567", 7.0d);
+        Pedido comida1 = new PedidoComida(101, "Av. Las Condes 123", 10.2d);
+        Pedido encomienda1 = new PedidoEncomienda(102, "Av. Santa Rosa 567", 7.0d);
 
         // Pedidos del repartidor Camila
-        Pedido express1 = new PedidoExpress("103", "Av. Los Leones 046", 5.6d);
-        Pedido comida2 = new PedidoComida("104", "Av. Providencia 890", 3.5d);
+        Pedido express1 = new PedidoExpress(103, "Av. Los Leones 046", 5.6d);
+        Pedido comida2 = new PedidoComida(104, "Av. Providencia 890", 3.5d);
 
         // Pedidos del repartidor Daniela
-        Pedido encomienda2 = new PedidoEncomienda("105", "Av. Apoquindo 1200", 8.3d);
-        Pedido express2 = new PedidoExpress("106", "Av. Independencia 450", 4.2d);
+        Pedido encomienda2 = new PedidoEncomienda(105, "Av. Apoquindo 1200", 8.3d);
+        Pedido express2 = new PedidoExpress(106, "Av. Independencia 450", 4.2d);
 
         // Listas de pedidos para cada repartidor
         List<Pedido> pedidosLuis = new ArrayList<>();

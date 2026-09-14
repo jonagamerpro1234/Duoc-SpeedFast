@@ -10,9 +10,9 @@ import cl.duocuc.salgado.mich.model.enums.TipoPedido;
  */
 public abstract class Pedido {
 
-    private  int id;
+    private final int id;
 
-    private final String idPedido;
+    private  String idPedido;
     private final String direccionEntrega;
     private final double distanciaKm;
     private final TipoPedido tipoPedido;
@@ -24,13 +24,13 @@ public abstract class Pedido {
     /**
      * Crea un nuevo pedido.
      *
-     * @param idPedido identificador del pedido
+     * @param id identificador del pedido
      * @param direccionEntrega dirección donde se realizará la entrega
      * @param distanciaKm distancia hasta el lugar de entrega
      * @param tipoPedido tipo de pedido
      */
-    public Pedido(String idPedido, String direccionEntrega, double distanciaKm, TipoPedido tipoPedido) {
-        this.idPedido = idPedido;
+    public Pedido(int id, String direccionEntrega, double distanciaKm, TipoPedido tipoPedido) {
+        this.id = id;
         this.direccionEntrega = direccionEntrega;
         this.distanciaKm = distanciaKm;
         this.tipoPedido = tipoPedido;
