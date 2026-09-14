@@ -1,26 +1,28 @@
 package cl.duocuc.salgado.mich.model;
 
-import java.util.List;
+import cl.duocuc.salgado.mich.service.ZonaDeCarga;
+import cl.duocuc.salgado.mich.model.enums.EstadoPedido;
+
 import java.util.Random;
 
 /**
  * Representa a un repartidor encargado de entregar pedidos.
- * Cada repartidor procesa sus pedidos de forma secuencial.
+ * Los pedidos son retirados desde una zona de carga compartida.
  */
 public class Repartidor implements Runnable {
 
     private String nombre;
-    private final List<Pedido> pedidos;
+    private final ZonaDeCarga zonaDeCarga;
 
     /**
      * Crea un nuevo repartidor.
      *
      * @param nombre nombre del repartidor
-     * @param pedidos lista de pedidos asignados
+     * @param zonaDeCarga zona de carga compartida
      */
-    public Repartidor(String nombre, List<Pedido> pedidos) {
+    public Repartidor(String nombre, ZonaDeCarga zonaDeCarga) {
         this.nombre = nombre;
-        this.pedidos = pedidos;
+        this.zonaDeCarga = zonaDeCarga;
     }
 
     /**
@@ -42,59 +44,53 @@ public class Repartidor implements Runnable {
     }
 
     /**
-     * Obtiene los pedidos asignados al repartidor.
-     *
-     * @return lista de pedidos
-     */
-    public List<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    /**
-     * Agrega un pedido a la lista del repartidor.
-     *
-     * @param pedido pedido que será agregado
-     */
-    public void addPedido(Pedido pedido) {
-        if (!pedidos.contains(pedido)) {
-            pedidos.add(pedido);
-        } else {
-            System.out.println("El pedido ya existe.");
-        }
-    }
-
-    /**
-     * Ejecuta el proceso de entrega de los pedidos asignados.
-     * Los pedidos se entregan de forma secuencial.
+     * Ejecuta el proceso de entrega.
+     * Cada repartidor retira pedidos desde la zona de carga
+     * y los procesa de forma secuencial.
      */
     @Override
     public void run() {
 
         Random random = new Random();
-        for (Pedido pedido : pedidos) {
+
+        while (true) {
+
+            Pedido pedido = zonaDeCarga.retirarPedido();
+
+            if (pedido == null) {
+                return;
+            }
+
+            pedido.setEstado(EstadoPedido.EN_REPARTO);
+            pedido.setRepartidorAsignado(nombre);
 
             System.out.println(
-                    "[Repartidor: " + nombre + "] Entregando Pedido"
-                            + pedido.getTipoPedido().getNombre()
-                            + " #" + pedido.getId() + "..."
+                    "[Repartidor: " + nombre + "] "
+                            + "Pedido #" + pedido.getId()
+                            + " en reparto."
             );
 
             try {
 
                 int tiempoEntrega = random.nextInt(2000) + 1000;
                 Thread.sleep(tiempoEntrega);
+                pedido.setEstado(EstadoPedido.ENTREGADO);
 
                 System.out.println(
-                        "[Repartidor: " + nombre + "] Pedido"
-                                + pedido.getTipoPedido().getNombre()
-                                + " #" + pedido.getId()
+                        "[Repartidor: " + nombre + "] "
+                                + "Pedido #" + pedido.getId()
                                 + " entregado."
                 );
                 System.out.println();
 
             } catch (InterruptedException e) {
+
                 Thread.currentThread().interrupt();
-                System.out.println("[Repartidor: " + nombre + "] La entrega fue interrumpida.");
+                System.out.println(
+                        "[Repartidor: " + nombre
+                                + "] La entrega fue interrumpida."
+                );
+
                 return;
             }
         }
