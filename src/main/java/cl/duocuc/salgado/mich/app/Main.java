@@ -1,5 +1,6 @@
 package cl.duocuc.salgado.mich.app;
 
+import cl.duocuc.salgado.mich.dao.ConexionDB;
 import cl.duocuc.salgado.mich.model.Pedido;
 import cl.duocuc.salgado.mich.model.PedidoComida;
 import cl.duocuc.salgado.mich.model.PedidoEncomienda;
@@ -10,6 +11,8 @@ import cl.duocuc.salgado.mich.service.ZonaDeCarga;
 import cl.duocuc.salgado.mich.ui.Menu;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -26,6 +29,8 @@ public class Main {
      * @param args argumentos de línea de comandos
      */
     public static void main(String[] args) {
+
+        initDB();
 
         //Inicializar ventana de app
         new Menu().init();
@@ -112,4 +117,15 @@ public class Main {
 
         return zonaDeCarga;
     }
+
+    private static void initDB(){
+
+        try (Connection connection = ConexionDB.conectar()) {
+            System.out.println("[MySQL] Conexion establecida correctamente.");
+        } catch (SQLException e) {
+            System.out.println("[MySQL] Error al conectar conexion.");
+        }
+
+    }
+
 }
