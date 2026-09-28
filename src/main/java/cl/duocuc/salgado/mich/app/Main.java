@@ -23,6 +23,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class Main {
 
+    private static Connection conexion;
+
     /**
      * Punto de entrada de la aplicación.
      *
@@ -30,6 +32,7 @@ public class Main {
      */
     public static void main(String[] args) {
 
+        //Inicializar Conexion con DB
         initDB();
 
         //Inicializar ventana de app
@@ -49,7 +52,6 @@ public class Main {
 
         // Cancelar pedido antes de iniciar los repartidores
         controlador.cancelar(pedidoCancelado);
-
         System.out.println();
 
         // Crear repartidores utilizando la misma zona de carga
@@ -81,9 +83,7 @@ public class Main {
             //executor.awaitTermination(1, TimeUnit.MINUTES);
 
         } catch (InterruptedException e) {
-
             Thread.currentThread().interrupt();
-
             System.out.println("La simulación fue interrumpida.");
         }
 
@@ -118,14 +118,18 @@ public class Main {
         return zonaDeCarga;
     }
 
-    private static void initDB(){
-
-        try (Connection connection = ConexionDB.conectar()) {
-            System.out.println("[MySQL] Conexion establecida correctamente.");
+    private static void initDB() {
+        try {
+            conexion = ConexionDB.conectar();
+            System.out.println("[MySQL] Conexión establecida correctamente.");
         } catch (SQLException e) {
-            System.out.println("[MySQL] Error al conectar conexion.");
+            conexion = null;
+            System.out.println("[MySQL] Error al conectar.");
+            e.printStackTrace();
         }
-
     }
 
+    public static Connection getConexion() {
+        return conexion;
+    }
 }

@@ -23,16 +23,17 @@ public class ConexionDB {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
-    /**
-     * Desconecta la base de datos de manera segura.
-     *
-     * @param conexion conexión que será cerrada
-     * @throws SQLException si ocurre un error al cerrar la conexión
-     */
-    public static void desconectar(Connection conexion) throws SQLException {
-
-        if (conexion != null && !conexion.isClosed()) {
-            conexion.close();
+    public static void desconectar(Connection conexion) {
+        if (conexion != null) {
+            try {
+                if (!conexion.isClosed()) {
+                    conexion.close();
+                    System.out.println("[MySQL] Conexion cerrada correctamente.");
+                }
+            } catch (SQLException e) {
+                System.out.println("[MySQL] Error al cerrar la conexion.");
+                System.out.println(e.getMessage());
+            }
         }
     }
 
