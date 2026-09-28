@@ -16,7 +16,6 @@ public enum TipoPedido {
 
     /**
      * Crea un tipo de pedido.
-     *
      * @param nombre nombre descriptivo del tipo de pedido
      */
     TipoPedido(String nombre) {
@@ -25,7 +24,6 @@ public enum TipoPedido {
 
     /**
      * Obtiene el nombre descriptivo del tipo de pedido.
-     *
      * @return nombre del tipo de pedido
      */
     public String getNombre() {

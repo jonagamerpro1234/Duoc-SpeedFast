@@ -7,6 +7,8 @@ import cl.duocuc.salgado.mich.model.PedidoExpress;
 import cl.duocuc.salgado.mich.model.Repartidor;
 import cl.duocuc.salgado.mich.service.ControladorDeEnvios;
 import cl.duocuc.salgado.mich.service.ZonaDeCarga;
+import cl.duocuc.salgado.mich.ui.Menu;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,6 +26,9 @@ public class Main {
      * @param args argumentos de línea de comandos
      */
     public static void main(String[] args) {
+
+        //Inicializar ventana de app
+        new Menu().init();
 
         // Crear zona de carga compartida
         ZonaDeCarga zonaDeCarga = getZonaDeCarga();
@@ -63,8 +68,12 @@ public class Main {
 
         try {
 
+            if(!executor.awaitTermination(1, TimeUnit.MINUTES)){
+                executor.shutdownNow();
+            }
+
             // Esperar a que todos los repartidores terminen
-            executor.awaitTermination(1, TimeUnit.MINUTES);
+            //executor.awaitTermination(1, TimeUnit.MINUTES);
 
         } catch (InterruptedException e) {
 
@@ -81,7 +90,7 @@ public class Main {
      * Crea y carga la zona de carga con los pedidos disponibles.
      * @return zona de carga con los pedidos registrados
      */
-    private static ZonaDeCarga getZonaDeCarga() {
+    private static @NotNull ZonaDeCarga getZonaDeCarga() {
 
         ZonaDeCarga zonaDeCarga = new ZonaDeCarga();
 

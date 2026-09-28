@@ -27,7 +27,6 @@ public class Repartidor implements Runnable {
 
     /**
      * Obtiene el nombre del repartidor.
-     *
      * @return nombre del repartidor
      */
     public String getNombre() {
@@ -36,7 +35,6 @@ public class Repartidor implements Runnable {
 
     /**
      * Modifica el nombre del repartidor.
-     *
      * @param nombre nuevo nombre del repartidor
      */
     public void setNombre(String nombre) {
