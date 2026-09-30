@@ -4,10 +4,9 @@ import cl.duocuc.salgado.mich.app.Main;
 import cl.duocuc.salgado.mich.dao.ConexionDB;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.Connection;
-import java.sql.SQLException;
 
 /**
  * Ventana principal del menu
@@ -15,9 +14,13 @@ import java.sql.SQLException;
 public class Menu extends JFrame {
 
     private JPanel contentPane;
+    private JButton btnRegistrarPedido;
+    private JButton btnListarPedidos;
+    private JButton btnRegistrarRepartidor;
+    private JButton btnListarRepartidores;
+    private JButton btnSalir;
 
     public Menu() {
-
 
         /*
          * Configuración de ventana
@@ -30,21 +33,60 @@ public class Menu extends JFrame {
 
         setupPanel();
         setupListeners();
-
     }
 
-    //Iniciador de la ventana
+    // Iniciador de la ventana
     public void init() {
         setVisible(true);
     }
 
-    private void setupPanel(){
+    private void setupPanel() {
 
+        contentPane = new JPanel();
+        contentPane.setLayout(new GridLayout(5, 1, 10, 10));
+
+        btnRegistrarPedido = new JButton("Registrar Pedido");
+        btnListarPedidos = new JButton("Listar Pedidos");
+        btnRegistrarRepartidor = new JButton("Registrar Repartidor");
+        btnListarRepartidores = new JButton("Listar Repartidores");
+        btnSalir = new JButton("Salir");
+
+        contentPane.add(btnRegistrarPedido);
+        contentPane.add(btnListarPedidos);
+        contentPane.add(btnRegistrarRepartidor);
+        contentPane.add(btnListarRepartidores);
+        contentPane.add(btnSalir);
+
+        setContentPane(contentPane);
     }
 
     private void setupListeners() {
 
-        //Desconectar conexion de DB al momento de cerrar la ventana
+        btnRegistrarPedido.addActionListener(e -> {
+            System.out.println("Registrar Pedido");
+        });
+
+        btnListarPedidos.addActionListener(e -> {
+            System.out.println("Listar Pedidos");
+        });
+
+        btnRegistrarRepartidor.addActionListener(e -> {
+            System.out.println("Registrar Repartidor");
+        });
+
+        btnListarRepartidores.addActionListener(e -> {
+            System.out.println("Listar Repartidores");
+        });
+
+        btnSalir.addActionListener(e -> {
+            ConexionDB.desconectar(Main.getConexion());
+            //Interrumpir Hilos
+            Thread.currentThread().interrupt();
+            System.out.println("[WARNING] Se han interrumpido todo los hilos");
+            System.exit(0);
+        });
+
+        // Desconectar conexión de DB al momento de cerrar la ventana
         addWindowListener(
                 new WindowAdapter() {
                     @Override
