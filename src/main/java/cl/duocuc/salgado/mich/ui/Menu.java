@@ -13,7 +13,7 @@ import java.awt.event.WindowEvent;
  */
 public class Menu extends JFrame {
 
-    private JPanel contentPane;
+    private JPanel contentPanel;
     private JButton btnRegistrarPedido;
     private JButton btnListarPedidos;
     private JButton btnRegistrarRepartidor;
@@ -42,8 +42,8 @@ public class Menu extends JFrame {
 
     private void setupPanel() {
 
-        contentPane = new JPanel();
-        contentPane.setLayout(new GridLayout(5, 1, 10, 10));
+        contentPanel = new JPanel();
+        contentPanel.setLayout(new GridLayout(5, 1, 10, 10));
 
         btnRegistrarPedido = new JButton("Registrar Pedido");
         btnListarPedidos = new JButton("Listar Pedidos");
@@ -51,13 +51,13 @@ public class Menu extends JFrame {
         btnListarRepartidores = new JButton("Listar Repartidores");
         btnSalir = new JButton("Salir");
 
-        contentPane.add(btnRegistrarPedido);
-        contentPane.add(btnListarPedidos);
-        contentPane.add(btnRegistrarRepartidor);
-        contentPane.add(btnListarRepartidores);
-        contentPane.add(btnSalir);
+        contentPanel.add(btnRegistrarPedido);
+        contentPanel.add(btnListarPedidos);
+        contentPanel.add(btnRegistrarRepartidor);
+        contentPanel.add(btnListarRepartidores);
+        contentPanel.add(btnSalir);
 
-        setContentPane(contentPane);
+        setContentPane(contentPanel);
     }
 
     private void setupListeners() {
