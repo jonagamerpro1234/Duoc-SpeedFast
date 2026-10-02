@@ -9,7 +9,7 @@ import java.sql.SQLException;
  */
 public class ConexionDB {
 
-    private static final String URL ="jdbc:mysql://localhost:3306/speedfast_db";
+    private static final String URL ="jdbc:mysql://localhost:3306/";
     private static final String USER = "root";
     private static final String PASSWORD = "admin";
 
@@ -23,6 +23,23 @@ public class ConexionDB {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
+    //Metodo encargado de crear la base de datos
+    private void crearBaseDatos() throws SQLException {
+
+    }
+
+    /**
+     * Verifica si existe la base de datos
+     * @return retorna {@code true en casodo de existir | false el caso de no existir y procede a crear la Base Datos sin tablas}
+     */
+    public boolean verificarBaseDato(){
+        return false;
+    }
+
+    /**
+     *
+     * @param conexion
+     */
     public static void desconectar(Connection conexion) {
         if (conexion != null) {
             try {

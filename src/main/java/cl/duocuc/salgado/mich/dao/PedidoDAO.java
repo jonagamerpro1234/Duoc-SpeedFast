@@ -94,4 +94,29 @@ public class PedidoDAO {
             System.out.println(e.getMessage());
         }
     }
+
+    public int obtenerProximoId() {
+
+        String sql = """
+            SELECT AUTO_INCREMENT
+            FROM information_schema.TABLES
+            WHERE TABLE_SCHEMA = DATABASE()
+            AND TABLE_NAME = 'pedido'
+            """;
+
+        try (Connection conexion = ConexionDB.conectar();
+             PreparedStatement statement = conexion.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            if (resultSet.next()) {
+                return resultSet.getInt("AUTO_INCREMENT");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("[MySQL] Error al obtener el próximo ID.");
+            System.out.println(e.getMessage());
+        }
+
+        return -1;
+    }
 }

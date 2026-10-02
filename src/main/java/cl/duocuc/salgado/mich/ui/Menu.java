@@ -2,6 +2,7 @@ package cl.duocuc.salgado.mich.ui;
 
 import cl.duocuc.salgado.mich.app.Main;
 import cl.duocuc.salgado.mich.dao.ConexionDB;
+import cl.duocuc.salgado.mich.ui.panels.RegistroPedido;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,7 +64,9 @@ public class Menu extends JFrame {
     private void setupListeners() {
 
         btnRegistrarPedido.addActionListener(e -> {
-            System.out.println("Registrar Pedido");
+            RegistroPedido  registroPedido = new RegistroPedido();
+            registroPedido.init();
+            System.out.println("[MENU] Se a abierto el meno de registro de pedidos");
         });
 
         btnListarPedidos.addActionListener(e -> {
@@ -71,7 +74,7 @@ public class Menu extends JFrame {
         });
 
         btnRegistrarRepartidor.addActionListener(e -> {
-            System.out.println("Registrar Repartidor");
+
         });
 
         btnListarRepartidores.addActionListener(e -> {
