@@ -14,8 +14,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class PedidoDAOImpl implements PedidoDAO {
 
+    /**
+     *
+     *
+     * @return
+     */
     public boolean create() {
 
         String sql = """
@@ -27,9 +35,7 @@ public class PedidoDAOImpl implements PedidoDAO {
                 )
                 """;
 
-        try (Connection con = ConexionDB.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-
+        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.execute();
 
             System.out.println("[MYSQL]: Se ha creado correctamente la tabla 'pedido'.");
@@ -42,6 +48,10 @@ public class PedidoDAOImpl implements PedidoDAO {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean verificarTabla() {
 
         String sql = """
@@ -51,8 +61,7 @@ public class PedidoDAOImpl implements PedidoDAO {
                 AND table_name = ?
                 """;
 
-        try (Connection conexion = ConexionDB.conectar();
-             PreparedStatement statement = conexion.prepareStatement(sql)) {
+        try (Connection conexion = ConexionDB.conectar(); PreparedStatement statement = conexion.prepareStatement(sql)) {
 
             statement.setString(1, "pedido");
 
@@ -80,14 +89,17 @@ public class PedidoDAOImpl implements PedidoDAO {
         return false;
     }
 
+    /**
+     *
+     * @param pedido
+     */
     @Override
     public void guardar(@NotNull Pedido pedido) {
 
         String sql = "INSERT INTO pedido (id, direccion, tipo, estado) VALUES (?, ?, ?, ?)";
 
-        try (Connection con = ConexionDB.conectar()){
+        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)){
 
-            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, pedido.getId());
             ps.setString(2, pedido.getDireccionEntrega());
             ps.setString(3, pedido.getTipoPedido().name());
@@ -102,6 +114,10 @@ public class PedidoDAOImpl implements PedidoDAO {
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Pedido> listarTodos() {
 
@@ -109,9 +125,7 @@ public class PedidoDAOImpl implements PedidoDAO {
 
         String sql = "SELECT id, direccion, tipo, estado FROM pedido;";
 
-        try(Connection con = ConexionDB.conectar()){
-
-            PreparedStatement ps = con.prepareStatement(sql);
+        try(Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
@@ -143,14 +157,16 @@ public class PedidoDAOImpl implements PedidoDAO {
         return pedidos;
     }
 
+    /**
+     *
+     * @param pedido
+     */
     @Override
     public void actualizar(@NotNull Pedido pedido) {
 
         String sql = "UPDATE pedido SET direccion = ?, tipo = ?, estado = ? WHERE id = ?";
 
-        try(Connection con = ConexionDB.conectar()){
-
-            PreparedStatement ps = con.prepareStatement(sql);
+        try(Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, pedido.getDireccionEntrega());
             ps.setString(2, pedido.getTipoPedido().name());
             ps.setString(3, pedido.getEstado().name());
@@ -171,13 +187,16 @@ public class PedidoDAOImpl implements PedidoDAO {
 
     }
 
+    /**
+     *
+     * @param id
+     */
     @Override
     public void eliminar(int id) {
 
         String sql = "DELETE FROM pedido WHERE id = ?";
 
-        try (Connection con = ConexionDB.conectar()){
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
 
             int filas = ps.executeUpdate();
