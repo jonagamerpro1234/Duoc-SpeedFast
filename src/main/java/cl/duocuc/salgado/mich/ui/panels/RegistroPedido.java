@@ -1,6 +1,7 @@
 package cl.duocuc.salgado.mich.ui.panels;
 
 import cl.duocuc.salgado.mich.dao.PedidoDAO;
+import cl.duocuc.salgado.mich.dao.PedidoDAOImpl;
 import cl.duocuc.salgado.mich.model.Pedido;
 import cl.duocuc.salgado.mich.model.PedidoComida;
 import cl.duocuc.salgado.mich.model.PedidoEncomienda;
@@ -99,7 +100,7 @@ public class RegistroPedido extends JFrame {
                     return;
             }
 
-            PedidoDAO pedidoDAO = new PedidoDAO();
+            PedidoDAOImpl pedidoDAO = new PedidoDAOImpl();
             pedidoDAO.guardar(pedido);
 
             JOptionPane.showMessageDialog(this, "Pedido registrado correctamente.");
@@ -108,9 +109,7 @@ public class RegistroPedido extends JFrame {
             txtDireccion.setText("");
 
         } catch (NumberFormatException e) {
-
-            JOptionPane.showMessageDialog(this, "El ID debe ser un número."
-            );
+            JOptionPane.showMessageDialog(this, "El ID debe ser un número.");
         }
     }
 }

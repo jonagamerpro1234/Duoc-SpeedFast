@@ -1,9 +1,10 @@
 package cl.duocuc.salgado.mich.dao;
 
 import cl.duocuc.salgado.mich.model.Pedido;
+
 import java.util.List;
 
-public interface PedidoDAO {
+public interface EntregaDAO {
 
     void guardar(Pedido pedido);
 
@@ -12,4 +13,5 @@ public interface PedidoDAO {
     void actualizar(Pedido pedido);
 
     void eliminar(int id);
+
 }
