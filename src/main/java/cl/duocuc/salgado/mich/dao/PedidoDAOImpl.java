@@ -182,7 +182,7 @@ public class PedidoDAOImpl implements PedidoDAO {
 
             int filas = ps.executeUpdate();
             if(filas > 0){
-                System.out.println("[MYSQL]: Se ha elimido el pedido #" + id + ", correctamente");
+                System.out.println("[MYSQL]: Se ha eliminado el pedido #" + id + ", correctamente");
             }else {
                 System.out.println("[MYSQL]: Error al eliminar el pedido #" + id + ", no se ha encontrado.");
             }
