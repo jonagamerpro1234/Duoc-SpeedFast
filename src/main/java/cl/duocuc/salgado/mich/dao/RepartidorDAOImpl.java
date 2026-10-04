@@ -27,7 +27,6 @@ public class RepartidorDAOImpl implements RepartidorDAO {
 
             System.out.println("[MYSQL]: Se ha creado correctamente la tabla 'repartidor'.");
             return true;
-
         } catch (SQLException e) {
             System.out.println("[MYSQL]: Error al crear tabla 'repartidor'.");
             System.out.println(e.getMessage());
@@ -50,11 +49,9 @@ public class RepartidorDAOImpl implements RepartidorDAO {
             try (ResultSet rs = ps.executeQuery()) {
 
                 if (rs.next()) {
-
                     boolean existe = rs.getInt(1) > 0;
 
                     if (!existe) {
-
                         System.out.println("[MYSQL]: La tabla 'repartidor' no existe.");
                         return create();
                     }
@@ -68,7 +65,6 @@ public class RepartidorDAOImpl implements RepartidorDAO {
             System.out.println("[MYSQL]: Error al comprobar la tabla 'repartidor'.");
             System.out.println(e.getMessage());
         }
-
         return false;
     }
 
@@ -106,12 +102,8 @@ public class RepartidorDAOImpl implements RepartidorDAO {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-
                 String nombre = rs.getString("nombre");
-
-                Repartidor repartidor =
-                        new Repartidor(nombre, zonaDeCarga);
-
+                Repartidor repartidor = new Repartidor(nombre, zonaDeCarga);
                 repartidores.add(repartidor);
             }
 

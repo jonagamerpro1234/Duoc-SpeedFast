@@ -14,16 +14,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
 public class PedidoDAOImpl implements PedidoDAO {
 
-    /**
-     *
-     *
-     * @return
-     */
     public boolean create() {
 
         String sql = """
@@ -36,8 +28,8 @@ public class PedidoDAOImpl implements PedidoDAO {
                 """;
 
         try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.execute();
 
+            ps.execute();
             System.out.println("[MYSQL]: Se ha creado correctamente la tabla 'pedido'.");
             return true;
 
@@ -48,10 +40,6 @@ public class PedidoDAOImpl implements PedidoDAO {
         }
     }
 
-    /**
-     *
-     * @return
-     */
     public boolean verificarTabla() {
 
         String sql = """
@@ -61,44 +49,45 @@ public class PedidoDAOImpl implements PedidoDAO {
                 AND table_name = ?
                 """;
 
-        try (Connection conexion = ConexionDB.conectar(); PreparedStatement statement = conexion.prepareStatement(sql)) {
+        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
 
-            statement.setString(1, "pedido");
+            ps.setString(1, "pedido");
 
-            try (ResultSet resultSet = statement.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
 
-                if (resultSet.next()) {
+                if (rs.next()) {
 
-                    boolean existe = resultSet.getInt(1) > 0;
+                    boolean existe = rs.getInt(1) > 0;
 
                     if (!existe) {
-                        System.out.println("[MySQL] La tabla 'pedido' no existe.");
+
+                        System.out.println("[MYSQL]: La tabla 'pedido' no existe.");
                         return create();
                     }
 
-                    System.out.println("[MySQL] La tabla 'pedido' existe.");
+                    System.out.println("[MYSQL]: La tabla 'pedido' existe.");
                     return true;
                 }
             }
 
         } catch (SQLException e) {
-            System.out.println("[MySQL] Error al comprobar la tabla 'pedido'.");
+            System.out.println("[MYSQL]: Error al comprobar la tabla 'pedido'.");
             System.out.println(e.getMessage());
         }
 
         return false;
     }
 
-    /**
-     *
-     * @param pedido
-     */
     @Override
     public void guardar(@NotNull Pedido pedido) {
 
-        String sql = "INSERT INTO pedido (id, direccion, tipo, estado) VALUES (?, ?, ?, ?)";
+        String sql = """
+                INSERT INTO pedido
+                (id, direccion, tipo, estado)
+                VALUES (?, ?, ?, ?)
+                """;
 
-        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)){
+        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, pedido.getId());
             ps.setString(2, pedido.getDireccionEntrega());
@@ -106,40 +95,56 @@ public class PedidoDAOImpl implements PedidoDAO {
             ps.setString(4, pedido.getEstado().name());
 
             ps.executeUpdate();
+
             System.out.println("[MYSQL]: Se ha guardado correctamente el pedido.");
-        }catch (SQLException e){
+
+        } catch (SQLException e) {
             System.out.println("[MYSQL]: Error al guardar el pedido.");
             System.out.println(e.getMessage());
         }
-
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public List<Pedido> listarTodos() {
 
         List<Pedido> pedidos = new ArrayList<>();
 
-        String sql = "SELECT id, direccion, tipo, estado FROM pedido;";
+        String sql = """
+                SELECT id, direccion, tipo, estado
+                FROM pedido
+                """;
 
-        try(Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)){
-            ResultSet rs = ps.executeQuery();
+        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
-            while(rs.next()){
+            while (rs.next()) {
+
                 int id = rs.getInt("id");
                 String direccion = rs.getString("direccion");
                 String tipo = rs.getString("tipo");
                 String estado = rs.getString("estado");
 
                 Pedido pedido;
+                switch (tipo) {
+                    case "COMIDA" ->
+                            pedido = new PedidoComida(
+                                    id,
+                                    direccion,
+                                    0
+                            );
+                    case "ENCOMIENDA" ->
+                            pedido = new PedidoEncomienda(
+                                    id,
+                                    direccion,
+                                    0
+                            );
+                    case "EXPRESS" ->
+                            pedido = new PedidoExpress(
+                                    id,
+                                    direccion,
+                                    0
+                            );
 
-                switch (tipo){
-                    case "COMIDA" -> pedido = new PedidoComida(id,direccion,0);
-                    case "ENCOMIENDA" -> pedido = new PedidoEncomienda(id,direccion,0);
-                    case "EXPRESS" -> pedido = new PedidoExpress(id,direccion,0);
                     default -> {
                         System.out.println("[MYSQL]: Tipo de pedido desconocido: " + tipo);
                         continue;
@@ -149,7 +154,8 @@ public class PedidoDAOImpl implements PedidoDAO {
                 pedido.setEstado(EstadoPedido.valueOf(estado));
                 pedidos.add(pedido);
             }
-        }catch (SQLException e){
+
+        } catch (SQLException e) {
             System.out.println("[MYSQL]: Error al listar los pedidos.");
             System.out.println(e.getMessage());
         }
@@ -157,16 +163,17 @@ public class PedidoDAOImpl implements PedidoDAO {
         return pedidos;
     }
 
-    /**
-     *
-     * @param pedido
-     */
     @Override
     public void actualizar(@NotNull Pedido pedido) {
 
-        String sql = "UPDATE pedido SET direccion = ?, tipo = ?, estado = ? WHERE id = ?";
+        String sql = """
+                UPDATE pedido
+                SET direccion = ?, tipo = ?, estado = ?
+                WHERE id = ?
+                """;
 
-        try(Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
+
             ps.setString(1, pedido.getDireccionEntrega());
             ps.setString(2, pedido.getTipoPedido().name());
             ps.setString(3, pedido.getEstado().name());
@@ -174,42 +181,42 @@ public class PedidoDAOImpl implements PedidoDAO {
 
             int filas = ps.executeUpdate();
 
-            if(filas > 0){
-                System.out.println("[MYSQL]: El Pedido #" +pedido.getId() + " se ha actualizado correctamente.");
-            }else {
-                System.out.println("[MYSQL]: Error al actualizar el pedido #" + pedido.getId() + ", no se ha encontrado.");
+            if (filas > 0) {
+                System.out.println("[MYSQL]: El Pedido #" + pedido.getId() + " se ha actualizado correctamente.");
+            } else {
+                System.out.println("[MYSQL]: No se encontró el pedido #" + pedido.getId() + ".");
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("[MYSQL]: Error al actualizar el pedido.");
             System.out.println(e.getMessage());
         }
-
     }
 
-    /**
-     *
-     * @param id
-     */
     @Override
     public void eliminar(int id) {
 
-        String sql = "DELETE FROM pedido WHERE id = ?";
+        String sql = """
+                DELETE FROM pedido
+                WHERE id = ?
+                """;
 
-        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = ConexionDB.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
             ps.setInt(1, id);
 
             int filas = ps.executeUpdate();
-            if(filas > 0){
-                System.out.println("[MYSQL]: Se ha eliminado el pedido #" + id + ", correctamente");
-            }else {
-                System.out.println("[MYSQL]: Error al eliminar el pedido #" + id + ", no se ha encontrado.");
+
+            if (filas > 0) {
+                System.out.println("[MYSQL]: Se ha eliminado el pedido #" + id + " correctamente.");
+            } else {
+                System.out.println("[MYSQL]: No se encontró el pedido #" + id + ".");
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("[MYSQL]: Error al eliminar el pedido.");
             System.out.println(e.getMessage());
         }
-
     }
 }
