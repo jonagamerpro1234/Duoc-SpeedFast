@@ -125,7 +125,7 @@ public class Main {
         } catch (SQLException e) {
             conexion = null;
             System.out.println("[MySQL] Error al conectar.");
-            e.printStackTrace();
+            System.out.println();
         }
     }
 
