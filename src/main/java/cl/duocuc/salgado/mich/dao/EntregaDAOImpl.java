@@ -3,12 +3,7 @@ package cl.duocuc.salgado.mich.dao;
 import cl.duocuc.salgado.mich.model.Entrega;
 import org.jetbrains.annotations.NotNull;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Date;
-import java.sql.Time;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,25 +23,14 @@ public class EntregaDAOImpl implements EntregaDAO {
                 )
                 """;
 
-        try (Connection con = ConexionDB.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.execute();
-
-            System.out.println(
-                    "[MYSQL]: Se ha creado correctamente la tabla 'entrega'."
-            );
-
+            System.out.println("[MYSQL]: Se ha creado correctamente la tabla 'entrega'.");
             return true;
-
         } catch (SQLException e) {
-
-            System.out.println(
-                    "[MYSQL]: Error al crear tabla 'entrega'."
-            );
-
+            System.out.println("[MYSQL]: Error al crear tabla 'entrega'.");
             System.out.println(e.getMessage());
-
             return false;
         }
     }
@@ -60,40 +44,26 @@ public class EntregaDAOImpl implements EntregaDAO {
                 AND table_name = ?
                 """;
 
-        try (Connection con = ConexionDB.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, "entrega");
-
             try (ResultSet rs = ps.executeQuery()) {
 
                 if (rs.next()) {
-
                     boolean existe = rs.getInt(1) > 0;
 
                     if (!existe) {
-
-                        System.out.println(
-                                "[MYSQL]: La tabla 'entrega' no existe."
-                        );
-
+                        System.out.println("[MYSQL]: La tabla 'entrega' no existe.");
                         return create();
                     }
 
-                    System.out.println(
-                            "[MYSQL]: La tabla 'entrega' existe."
-                    );
-
+                    System.out.println("[MYSQL]: La tabla 'entrega' existe.");
                     return true;
                 }
             }
 
         } catch (SQLException e) {
-
-            System.out.println(
-                    "[MYSQL]: Error al comprobar la tabla 'entrega'."
-            );
-
+            System.out.println("[MYSQL]: Error al comprobar la tabla 'entrega'.");
             System.out.println(e.getMessage());
         }
 
@@ -101,7 +71,7 @@ public class EntregaDAOImpl implements EntregaDAO {
     }
 
     @Override
-    public void guardar(Entrega entrega) {
+    public void guardar(@NotNull Entrega entrega) {
 
         String sql = """
                 INSERT INTO entrega
@@ -109,32 +79,17 @@ public class EntregaDAOImpl implements EntregaDAO {
                 VALUES (?, ?, ?, ?)
                 """;
 
-        try (Connection con = ConexionDB.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, entrega.getIdPedido());
             ps.setInt(2, entrega.getIdRepartidor());
-            ps.setDate(
-                    3,
-                    Date.valueOf(entrega.getFecha())
-            );
-            ps.setTime(
-                    4,
-                    Time.valueOf(entrega.getHora())
-            );
-
+            ps.setDate(3, Date.valueOf(entrega.getFecha()));
+            ps.setTime(4, Time.valueOf(entrega.getHora()));
             ps.executeUpdate();
 
-            System.out.println(
-                    "[MYSQL]: Entrega guardada correctamente."
-            );
-
+            System.out.println("[MYSQL]: Entrega guardada correctamente.");
         } catch (SQLException e) {
-
-            System.out.println(
-                    "[MYSQL]: Error al guardar la entrega."
-            );
-
+            System.out.println("[MYSQL]: Error al guardar la entrega.");
             System.out.println(e.getMessage());
         }
     }
@@ -149,8 +104,7 @@ public class EntregaDAOImpl implements EntregaDAO {
                 FROM entrega
                 """;
 
-        try (Connection con = ConexionDB.conectar();
-             PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
@@ -174,11 +128,7 @@ public class EntregaDAOImpl implements EntregaDAO {
             }
 
         } catch (SQLException e) {
-
-            System.out.println(
-                    "[MYSQL]: Error al listar las entregas."
-            );
-
+            System.out.println("[MYSQL]: Error al listar las entregas.");
             System.out.println(e.getMessage());
         }
 
@@ -197,33 +147,22 @@ public class EntregaDAOImpl implements EntregaDAO {
                 WHERE id = ?
                 """;
 
-        try (Connection con = ConexionDB.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, entrega.getIdPedido());
             ps.setInt(2, entrega.getIdRepartidor());
-            ps.setDate(
-                    3,
-                    Date.valueOf(entrega.getFecha())
-            );
-            ps.setTime(
-                    4,
-                    Time.valueOf(entrega.getHora())
-            );
+            ps.setDate(3,Date.valueOf(entrega.getFecha()));
+            ps.setTime(4,Time.valueOf(entrega.getHora()));
             ps.setInt(5, entrega.getId());
-
             int filas = ps.executeUpdate();
 
             if (filas > 0) {
-
                 System.out.println(
                         "[MYSQL]: Entrega #"
                                 + entrega.getId()
-                                + " actualizada correctamente."
-                );
+                                + " actualizada correctamente.");
 
             } else {
-
                 System.out.println(
                         "[MYSQL]: No se encontró la entrega #"
                                 + entrega.getId()
@@ -232,11 +171,7 @@ public class EntregaDAOImpl implements EntregaDAO {
             }
 
         } catch (SQLException e) {
-
-            System.out.println(
-                    "[MYSQL]: Error al actualizar la entrega."
-            );
-
+            System.out.println("[MYSQL]: Error al actualizar la entrega.");
             System.out.println(e.getMessage());
         }
     }
@@ -249,36 +184,19 @@ public class EntregaDAOImpl implements EntregaDAO {
                 WHERE id = ?
                 """;
 
-        try (Connection con = ConexionDB.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, id);
-
             int filas = ps.executeUpdate();
 
             if (filas > 0) {
-
-                System.out.println(
-                        "[MYSQL]: Entrega #"
-                                + id
-                                + " eliminada correctamente."
-                );
-
+                System.out.println("[MYSQL]: Entrega #"+ id + " eliminada correctamente.");
             } else {
-
-                System.out.println(
-                        "[MYSQL]: No se encontró la entrega #"
-                                + id
-                                + "."
-                );
+                System.out.println("[MYSQL]: No se encontró la entrega #" + id + ".");
             }
 
         } catch (SQLException e) {
-
-            System.out.println(
-                    "[MYSQL]: Error al eliminar la entrega."
-            );
-
+            System.out.println("[MYSQL]: Error al eliminar la entrega.");
             System.out.println(e.getMessage());
         }
     }

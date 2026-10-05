@@ -25,6 +25,8 @@ public class Main {
 
     private static Connection conexion;
 
+
+
     /**
      * Punto de entrada de la aplicación.
      *

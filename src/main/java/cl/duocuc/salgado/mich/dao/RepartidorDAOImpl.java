@@ -94,16 +94,26 @@ public class RepartidorDAOImpl implements RepartidorDAO {
         List<Repartidor> repartidores = new ArrayList<>();
 
         String sql = """
-                SELECT id, nombre
-                FROM repartidor
-                """;
+            SELECT id, nombre
+            FROM repartidor
+            """;
 
-        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConexionDB.conectar();
+             PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
+
+                int id = rs.getInt("id");
                 String nombre = rs.getString("nombre");
-                Repartidor repartidor = new Repartidor(nombre, zonaDeCarga);
+
+                Repartidor repartidor =
+                        new Repartidor(
+                                id,
+                                nombre,
+                                zonaDeCarga
+                        );
+
                 repartidores.add(repartidor);
             }
 
