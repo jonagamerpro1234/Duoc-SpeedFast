@@ -1,8 +1,12 @@
 package cl.duocuc.salgado.mich.ui;
 
-import cl.duocuc.salgado.mich.app.Main;
-import cl.duocuc.salgado.mich.dao.ConexionDB;
+import cl.duocuc.salgado.mich.service.ZonaDeCarga;
+import cl.duocuc.salgado.mich.ui.panels.ListaEntregas;
+import cl.duocuc.salgado.mich.ui.panels.ListaPedidos;
+import cl.duocuc.salgado.mich.ui.panels.ListaRepartidores;
+import cl.duocuc.salgado.mich.ui.panels.RegistroEntrega;
 import cl.duocuc.salgado.mich.ui.panels.RegistroPedido;
+import cl.duocuc.salgado.mich.ui.panels.RegistroRepartidor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,27 +14,32 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- * Ventana principal del menu
+ * Ventana principal del menú.
  */
 public class Menu extends JFrame {
 
     private JPanel contentPanel;
+
+    private ZonaDeCarga zonaDeCarga;
+
     private JButton btnRegistrarPedido;
     private JButton btnListarPedidos;
     private JButton btnRegistrarRepartidor;
     private JButton btnListarRepartidores;
+    private JButton btnRegistrarEntrega;
+    private JButton btnListarEntregas;
     private JButton btnSalir;
 
     public Menu() {
 
-        /*
-         * Configuración de ventana
-         */
-        setTitle("Menu");
-        setSize(400, 400);
+        this.zonaDeCarga = new ZonaDeCarga();
+
+        // Configuración de ventana
+        setTitle("SpeedFast - Menú Principal");
+        setSize(400, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setResizable(true);
+        setResizable(false);
 
         setupPanel();
         setupListeners();
@@ -44,18 +53,38 @@ public class Menu extends JFrame {
     private void setupPanel() {
 
         contentPanel = new JPanel();
-        contentPanel.setLayout(new GridLayout(5, 1, 10, 10));
 
-        btnRegistrarPedido = new JButton("Registrar Pedido");
-        btnListarPedidos = new JButton("Listar Pedidos");
-        btnRegistrarRepartidor = new JButton("Registrar Repartidor");
-        btnListarRepartidores = new JButton("Listar Repartidores");
-        btnSalir = new JButton("Salir");
+        contentPanel.setLayout(
+                new GridLayout(7, 1, 10, 10)
+        );
+
+        btnRegistrarPedido =
+                new JButton("Registrar Pedido");
+
+        btnListarPedidos =
+                new JButton("Listar Pedidos");
+
+        btnRegistrarRepartidor =
+                new JButton("Registrar Repartidor");
+
+        btnListarRepartidores =
+                new JButton("Listar Repartidores");
+
+        btnRegistrarEntrega =
+                new JButton("Registrar Entrega");
+
+        btnListarEntregas =
+                new JButton("Listar Entregas");
+
+        btnSalir =
+                new JButton("Salir");
 
         contentPanel.add(btnRegistrarPedido);
         contentPanel.add(btnListarPedidos);
         contentPanel.add(btnRegistrarRepartidor);
         contentPanel.add(btnListarRepartidores);
+        contentPanel.add(btnRegistrarEntrega);
+        contentPanel.add(btnListarEntregas);
         contentPanel.add(btnSalir);
 
         setContentPane(contentPanel);
@@ -63,42 +92,103 @@ public class Menu extends JFrame {
 
     private void setupListeners() {
 
+        // Registrar pedido
         btnRegistrarPedido.addActionListener(e -> {
-            RegistroPedido  registroPedido = new RegistroPedido();
+
+            RegistroPedido registroPedido =
+                    new RegistroPedido();
+
             registroPedido.init();
-            System.out.println("[MENU] Se a abierto el meno de registro de pedidos");
+
+            System.out.println(
+                    "[MENU] Se ha abierto el menú de registro de pedidos."
+            );
         });
 
+        // Listar pedidos
         btnListarPedidos.addActionListener(e -> {
-            System.out.println("Listar Pedidos");
+
+            ListaPedidos listaPedidos =
+                    new ListaPedidos();
+
+            listaPedidos.init();
+
+            System.out.println(
+                    "[MENU] Se ha abierto la lista de pedidos."
+            );
         });
 
+        // Registrar repartidor
         btnRegistrarRepartidor.addActionListener(e -> {
 
+            RegistroRepartidor registroRepartidor =
+                    new RegistroRepartidor(zonaDeCarga);
+
+            registroRepartidor.init();
+
+            System.out.println(
+                    "[MENU] Se ha abierto el registro de repartidores."
+            );
         });
 
+        // Listar repartidores
         btnListarRepartidores.addActionListener(e -> {
-            System.out.println("Listar Repartidores");
+
+            ListaRepartidores listaRepartidores =
+                    new ListaRepartidores(zonaDeCarga);
+
+            listaRepartidores.init();
+
+            System.out.println(
+                    "[MENU] Se ha abierto la lista de repartidores."
+            );
         });
 
+        // Registrar entrega
+        btnRegistrarEntrega.addActionListener(e -> {
+
+            RegistroEntrega registroEntrega =
+                    new RegistroEntrega(zonaDeCarga);
+
+            registroEntrega.init();
+
+            System.out.println(
+                    "[MENU] Se ha abierto el registro de entregas."
+            );
+        });
+
+        // Listar entregas
+        btnListarEntregas.addActionListener(e -> {
+
+            ListaEntregas listaEntregas =
+                    new ListaEntregas(zonaDeCarga);
+
+            listaEntregas.init();
+
+            System.out.println("[MENU] Se ha abierto la lista de entregas."
+            );
+        });
+
+        // Salir
         btnSalir.addActionListener(e -> {
-            ConexionDB.desconectar(Main.getConexion());
-            //Interrumpir Hilos
-            Thread.currentThread().interrupt();
-            System.out.println("[WARNING] Se han interrumpido todo los hilos");
+            System.out.println("[MENU] Cerrando aplicación...");
+            dispose();
             System.exit(0);
         });
 
-        // Desconectar conexión de DB al momento de cerrar la ventana
+        // Cerrar ventana
         addWindowListener(
                 new WindowAdapter() {
+
                     @Override
-                    public void windowClosing(WindowEvent e) {
-                        ConexionDB.desconectar(Main.getConexion());
+                    public void windowClosing(
+                            WindowEvent e) {
+
+                        System.out.println(
+                                "[MENU] Aplicación cerrada."
+                        );
                     }
                 }
         );
     }
-
-
 }

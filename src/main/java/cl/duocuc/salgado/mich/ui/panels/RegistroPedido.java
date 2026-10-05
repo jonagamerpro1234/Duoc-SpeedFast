@@ -1,11 +1,11 @@
 package cl.duocuc.salgado.mich.ui.panels;
 
-import cl.duocuc.salgado.mich.dao.PedidoDAO;
 import cl.duocuc.salgado.mich.dao.PedidoDAOImpl;
 import cl.duocuc.salgado.mich.model.Pedido;
 import cl.duocuc.salgado.mich.model.PedidoComida;
 import cl.duocuc.salgado.mich.model.PedidoEncomienda;
 import cl.duocuc.salgado.mich.model.PedidoExpress;
+import cl.duocuc.salgado.mich.model.enums.EstadoPedido;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,14 +16,15 @@ public class RegistroPedido extends JFrame {
     private JTextField txtId;
     private JTextField txtDireccion;
     private JComboBox<String> cmbTipo;
+    private JComboBox<EstadoPedido> cmbEstado;
     private JButton btnGuardar;
 
     public RegistroPedido() {
-
         setTitle("Registrar Pedido");
         setSize(400, 300);
         setLocationRelativeTo(null);
         setResizable(false);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         setupPanel();
         setupListeners();
@@ -35,16 +36,25 @@ public class RegistroPedido extends JFrame {
 
     private void setupPanel() {
 
-        JPanel panel = new JPanel(new GridLayout(4, 2, 10, 10));
+        JPanel panel = new JPanel(new GridLayout(5, 2, 10, 10));
 
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // ID
         panel.add(new JLabel("ID:"));
+
         txtId = new JTextField();
+
         panel.add(txtId);
 
+        // Dirección
         panel.add(new JLabel("Dirección:"));
+
         txtDireccion = new JTextField();
+
         panel.add(txtDireccion);
 
+        // Tipo
         panel.add(new JLabel("Tipo:"));
 
         cmbTipo = new JComboBox<>();
@@ -55,8 +65,24 @@ public class RegistroPedido extends JFrame {
 
         panel.add(cmbTipo);
 
-        btnGuardar = new JButton("Guardar");
+        // Estado
+        panel.add(new JLabel("Estado:"));
+
+        cmbEstado = new JComboBox<>(
+                new EstadoPedido[]{
+                        EstadoPedido.PENDIENTE,
+                        EstadoPedido.EN_REPARTO,
+                        EstadoPedido.ENTREGADO
+                }
+        );
+
+        panel.add(cmbEstado);
+
+        // Botón
         panel.add(new JLabel());
+
+        btnGuardar = new JButton("Guardar");
+
         panel.add(btnGuardar);
 
         add(panel);
@@ -64,18 +90,37 @@ public class RegistroPedido extends JFrame {
 
     private void setupListeners() {
 
-        btnGuardar.addActionListener(e -> guardarPedido());
+        btnGuardar.addActionListener(
+                e -> guardarPedido()
+        );
     }
 
     private void guardarPedido() {
 
         try {
 
-            int id = Integer.parseInt(txtId.getText());
-            String direccion = txtDireccion.getText();
+            String textoId = txtId.getText().trim();
+            String direccion = txtDireccion.getText().trim();
 
-            if (direccion.isBlank()) {
+            // Validar ID
+            if (textoId.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un ID.");
+                txtId.requestFocus();
+                return;
+            }
+
+            int id = Integer.parseInt(textoId);
+
+            if (id <= 0) {
+                JOptionPane.showMessageDialog(this, "El ID debe ser mayor que cero.");
+                txtId.requestFocus();
+                return;
+            }
+
+            // Validar dirección
+            if (direccion.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar una dirección.");
+                txtDireccion.requestFocus();
                 return;
             }
 
@@ -89,27 +134,47 @@ public class RegistroPedido extends JFrame {
                     break;
 
                 case "Encomienda":
-                    pedido = new PedidoEncomienda(id, direccion, 0);
+                    pedido = new PedidoEncomienda(
+                                    id,
+                                    direccion,
+                                    0
+                            );
                     break;
 
                 case "Express":
-                    pedido = new PedidoExpress(id, direccion, 0);
+                    pedido = new PedidoExpress(
+                                    id,
+                                    direccion,
+                                    0
+                            );
                     break;
+
                 default:
                     JOptionPane.showMessageDialog(this, "Tipo de pedido no válido.");
                     return;
             }
 
+            // Aplicar estado seleccionado
+            EstadoPedido estado = (EstadoPedido) cmbEstado.getSelectedItem();
+            pedido.setEstado(estado);
+
+            // Guardar en BD
             PedidoDAOImpl pedidoDAO = new PedidoDAOImpl();
             pedidoDAO.guardar(pedido);
-
             JOptionPane.showMessageDialog(this, "Pedido registrado correctamente.");
 
+            // Limpiar formulario
             txtId.setText("");
             txtDireccion.setText("");
 
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El ID debe ser un número.");
+            cmbTipo.setSelectedIndex(0);
+            cmbEstado.setSelectedIndex(0);
+
+            txtId.requestFocus();
+
+        } catch (NumberFormatException e) {w
+            JOptionPane.showMessageDialog(this, "El ID debe ser un número válido.");
+            txtId.requestFocus();
         }
     }
 }
