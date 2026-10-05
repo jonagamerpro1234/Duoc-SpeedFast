@@ -1,17 +1,16 @@
 package cl.duocuc.salgado.mich.dao;
 
-import cl.duocuc.salgado.mich.model.Pedido;
+import cl.duocuc.salgado.mich.model.Entrega;
 
 import java.util.List;
 
 public interface EntregaDAO {
 
-    void guardar(Pedido pedido);
+    void guardar(Entrega entrega);
 
-    List<Pedido> listarTodos();
+    List<Entrega> listarTodos();
 
-    void actualizar(Pedido pedido);
+    void actualizar(Entrega entrega);
 
     void eliminar(int id);
-
 }
