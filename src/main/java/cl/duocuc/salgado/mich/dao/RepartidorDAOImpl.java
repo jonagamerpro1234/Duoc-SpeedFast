@@ -98,8 +98,7 @@ public class RepartidorDAOImpl implements RepartidorDAO {
             FROM repartidor
             """;
 
-        try (Connection con = ConexionDB.conectar();
-             PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
@@ -128,24 +127,21 @@ public class RepartidorDAOImpl implements RepartidorDAO {
     public void actualizar(@NotNull Repartidor repartidor) {
 
         String sql = """
-                UPDATE repartidor
-                SET nombre = ?
-                WHERE nombre = ?
-                """;
+            UPDATE repartidor
+            SET nombre = ?
+            WHERE id = ?
+            """;
 
         try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
 
-            String nombreActual = repartidor.getNombre();
-
             ps.setString(1, repartidor.getNombre());
-            ps.setString(2, nombreActual);
-
+            ps.setInt(2, repartidor.getId());
             int filas = ps.executeUpdate();
 
             if (filas > 0) {
-                System.out.println("[MYSQL]: Repartidor actualizado correctamente.");
+                System.out.println("[MYSQL]: Repartidor #" + repartidor.getId() + " actualizado correctamente.");
             } else {
-                System.out.println("[MYSQL]: No se encontró el repartidor.");
+                System.out.println("[MYSQL]: No se encontró el repartidor #" + repartidor.getId() + ".");
             }
 
         } catch (SQLException e) {
