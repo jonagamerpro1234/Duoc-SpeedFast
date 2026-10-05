@@ -12,7 +12,7 @@ public class ConexionDB {
 
     private static final String URL = "jdbc:mysql://localhost:3306/speedfast_db?createDatabaseIfNotExist=true";
     private static final String USER = "root";
-    private static final String PASS = "admin";
+    private static final String PASS = "TU_CONTRASEÑA";
 
     /**
      * Establece una conexión con la base de datos SpeedFast.

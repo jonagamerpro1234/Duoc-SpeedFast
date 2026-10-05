@@ -172,7 +172,7 @@ public class RegistroPedido extends JFrame {
 
             txtId.requestFocus();
 
-        } catch (NumberFormatException e) {w
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El ID debe ser un número válido.");
             txtId.requestFocus();
         }
